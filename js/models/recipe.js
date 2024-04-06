@@ -1,8 +1,8 @@
-class Receta {
-    constructor(nombre, categoria, preparacion, ingredientes) {
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.preparacion = preparacion;
-        this.ingredientes = ingredientes;
+class Recipe {
+    constructor(name, category, preparation, ingredients) {
+        this.name = name;
+        this.category = category;
+        this.preparation = preparation;
+        this.ingredients = ingredients;
     }
 }
