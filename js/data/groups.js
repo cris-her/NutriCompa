@@ -14,7 +14,7 @@ let groups = [
         "2"
     ),
     new Group(
-        "Verduras consumo libre",
+        "Verduras de consumo libre",
         "25",
         "4",
         "0",
