@@ -1,262 +1,393 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriCompa</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        form div {
-            display: flex;
-            align-items: center;
-        }
-
-        form label {
-            margin-right: 5px;
-        }
-
-        form input,
-        form select {
-            margin-right: 10px;
-        }
-
-        #resultado {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f8f8;
-        }
-
-        h1,
-        h2 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        form {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="number"] {
-            width: 100px;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .form-row label {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .form-row input[type="number"] {
-            flex: 2;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4caf50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        td[contenteditable="true"] {
-            background-color: #fff;
-            cursor: pointer;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>Calculadora de Requerimiento Calórico</h1>
-    <form id="calculoRequerimiento" onsubmit="calcularCalorias(); return false;">
-        <div>
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" required>
-        </div>
-        <div>
-            <label for="sexo">Sexo:</label>
-            <select id="sexo" name="sexo" required>
-                <option value="hombre">Hombre</option>
-                <option value="mujer">Mujer</option>
-            </select>
-        </div>
-        <div>
-            <label for="peso">Peso (kg):</label>
-            <input type="number" id="peso" name="peso" required>
-        </div>
-        <div>
-            <label for="altura">Altura (cm):</label>
-            <input type="number" id="altura" name="altura" required>
-        </div>
-        <div>
-            <label for="ejercicio">Nivel de ejercicio:</label>
-            <select id="ejercicio" name="ejercicio" required>
-                <option value="sedentario">Poco o ningún ejercicio</option>
-                <option value="ligero">Ejercicio ligero (1-3 días por semana)</option>
-                <option value="moderado">Ejercicio Moderado (3-5 días por semana)</option>
-                <option value="fuerte">Ejercicio Fuerte (6 días por semana)</option>
-                <option value="profesional">Ejercicio profesional o extremo</option>
-            </select>
-        </div>
-        <div>
-            <label for="objetivo">Objetivo:</label>
-            <select id="objetivo" name="objetivo" required>
-                <option value="mantener">Mantener peso</option>
-                <option value="bajar">Bajar de peso</option>
-                <option value="aumentar">Aumentar masa muscular</option>
-            </select>
-        </div>
-        <button type="submit">Calcular</button>
-    </form>
-    <div id="resultado"></div>
-
-    <h2>Planificación Semanal de Comidas</h2>
-    <table id="planificacion">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Lunes</th>
-                <th>Martes</th>
-                <th>Miércoles</th>
-                <th>Jueves</th>
-                <th>Viernes</th>
-                <th>Sábado</th>
-                <th>Domingo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Desayuno</td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true"></td>
-            </tr>
-            <!-- Repite las filas para colación, comida, colación, cena y total -->
-        </tbody>
-    </table>
-
-    <h2>Lista de Compras</h2>
-    <ul id="listaCompras">
-        <!-- Aquí se agregarán dinámicamente los elementos de la lista de compras -->
-    </ul>
-
-
-    <script>
-        function calcularCalorias() {
-            var edad = parseInt(document.getElementById('edad').value);
-            var sexo = document.getElementById('sexo').value;
-            var peso = parseInt(document.getElementById('peso').value);
-            var altura = parseInt(document.getElementById('altura').value);
-            var ejercicio = document.getElementById('ejercicio').value;
-            var objetivo = document.getElementById('objetivo').value;
-
-            var tmb;
-            if (sexo === 'hombre') {
-                tmb = (10 * peso) + (6.25 * altura) - (5 * edad) + 5;
-            } else {
-                tmb = (10 * peso) + (6.25 * altura) - (5 * edad) - 161;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NutriCompa</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
             }
 
-            var factorEjercicio;
-            switch (ejercicio) {
-                case 'sedentario':
-                    factorEjercicio = 1.2;
-                    break;
-                case 'ligero':
-                    factorEjercicio = 1.375;
-                    break;
-                case 'moderado':
-                    factorEjercicio = 1.55;
-                    break;
-                case 'fuerte':
-                    factorEjercicio = 1.725;
-                    break;
-                case 'profesional':
-                    factorEjercicio = 1.9;
-                    break;
+            form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
             }
 
-            var totalCalorias = tmb * factorEjercicio;
-
-            if (objetivo === 'bajar') {
-                totalCalorias *= 0.85;
-            } else if (objetivo === 'aumentar') {
-                totalCalorias *= 1.15;
+            form div {
+                display: flex;
+                align-items: center;
             }
 
-            document.getElementById('resultado').innerText = 'Calorías diarias necesarias: ' + totalCalorias.toFixed(2);
-        }
-    </script>
-</body>
+            form label {
+                margin-right: 5px;
+            }
 
+            form input,
+            form select {
+                margin-right: 10px;
+            }
+
+            #resultado {
+                text-align: center;
+                margin-top: 20px;
+            }
+        </style>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f8f8f8;
+            }
+
+            h1,
+            h2 {
+                color: #333;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            form {
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            input[type="number"] {
+                width: 100px;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .form-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .form-row label {
+                flex: 1;
+                margin-right: 10px;
+            }
+
+            .form-row input[type="number"] {
+                flex: 2;
+            }
+
+            button {
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                text-align: center;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #4caf50;
+                color: white;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            td[contenteditable="true"] {
+                background-color: #fff;
+                cursor: pointer;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            li {
+                margin-bottom: 10px;
+            }
+        </style>
+        <style>
+            /* Estilos para la ventana modal */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Calculadora de Requerimiento Calórico</h1>
+        <form id="calculoRequerimiento" onsubmit="calcularCalorias(); return false;">
+            <div>
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" required>
+            </div>
+            <div>
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                </select>
+            </div>
+            <div>
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" name="peso" required>
+            </div>
+            <div>
+                <label for="altura">Altura (cm):</label>
+                <input type="number" id="altura" name="altura" required>
+            </div>
+            <div>
+                <label for="ejercicio">Nivel de ejercicio:</label>
+                <select id="ejercicio" name="ejercicio" required>
+                    <option value="sedentario">Poco o ningún ejercicio</option>
+                    <option value="ligero">Ejercicio ligero (1-3 días por semana)</option>
+                    <option value="moderado">Ejercicio Moderado (3-5 días por semana)</option>
+                    <option value="fuerte">Ejercicio Fuerte (6 días por semana)</option>
+                    <option value="profesional">Ejercicio profesional o extremo</option>
+                </select>
+            </div>
+            <div>
+                <label for="objetivo">Objetivo:</label>
+                <select id="objetivo" name="objetivo" required>
+                    <option value="mantener">Mantener peso</option>
+                    <option value="bajar">Bajar de peso</option>
+                    <option value="aumentar">Aumentar masa muscular</option>
+                </select>
+            </div>
+            <button type="submit">Calcular</button>
+        </form>
+        <div id="resultado"></div>
+
+        <h2>Planificación Semanal de Comidas</h2>
+        <table id="planificacion">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sábado</th>
+                    <th>Domingo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Desayuno</td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                </tr>
+                <tr>
+                    <td>Colación</td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                </tr>
+                <tr>
+                    <td>Comida</td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                </tr>
+                <tr>
+                    <td>Colación</td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                </tr>
+                <tr>
+                    <td>Cena</td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Ventana Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <!-- <p>Contenido de la ventana modal.</p> -->
+                <h2>Selecciona una receta:</h2>
+                <ul id="recipe-list"></ul>
+            </div>
+        </div>
+
+        <h2>Lista de Compras</h2>
+        <ul id="listaCompras">
+            <!-- Aquí se agregarán dinámicamente los elementos de la lista de compras -->
+        </ul>
+
+
+        <script>
+            function calcularCalorias() {
+                var edad = parseInt(document.getElementById('edad').value);
+                var sexo = document.getElementById('sexo').value;
+                var peso = parseInt(document.getElementById('peso').value);
+                var altura = parseInt(document.getElementById('altura').value);
+                var ejercicio = document.getElementById('ejercicio').value;
+                var objetivo = document.getElementById('objetivo').value;
+
+                var tmb;
+                if (sexo === 'hombre') {
+                    tmb = (10 * peso) + (6.25 * altura) - (5 * edad) + 5;
+                } else {
+                    tmb = (10 * peso) + (6.25 * altura) - (5 * edad) - 161;
+                }
+
+                var factorEjercicio;
+                switch (ejercicio) {
+                    case 'sedentario':
+                        factorEjercicio = 1.2;
+                        break;
+                    case 'ligero':
+                        factorEjercicio = 1.375;
+                        break;
+                    case 'moderado':
+                        factorEjercicio = 1.55;
+                        break;
+                    case 'fuerte':
+                        factorEjercicio = 1.725;
+                        break;
+                    case 'profesional':
+                        factorEjercicio = 1.9;
+                        break;
+                }
+
+                var totalCalorias = tmb * factorEjercicio;
+
+                if (objetivo === 'bajar') {
+                    totalCalorias *= 0.85;
+                } else if (objetivo === 'aumentar') {
+                    totalCalorias *= 1.15;
+                }
+
+                document.getElementById('resultado').innerText = 'Calorías diarias necesarias: ' + totalCalorias.toFixed(2);
+            }
+        </script>
+        <script>
+            // Función para mostrar la ventana modal con la lista de recetas
+            function showRecipeModal(cell) {
+                // Obtener el valor de la celda
+                //var cellValue = cell.textContent.trim();
+            
+                // Actualizar el contenido de la ventana modal con el valor de la celda
+                // var modalContent = modal.querySelector('.modal-content');
+                // modalContent.innerHTML = '<span class="close" onclick="closeModal()">&times;</span><p>Contenido de la celda: ' + cellValue + '</p>';
+
+                const modal = document.getElementById('modal');
+                const recipeList = document.getElementById('recipe-list');
+
+                // Limpiar la lista de recetas
+                recipeList.innerHTML = '';
+
+                // Agregar cada receta a la lista
+                recipes.forEach(recipe => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = recipe.name;
+                    listItem.addEventListener('click', function() {
+                        // Al hacer clic en una receta, mostrarla en la celda correspondiente
+                        cell.textContent = recipe.name;
+                        closeModal();
+                    });
+                    recipeList.appendChild(listItem);
+                });
+
+                // Mostrar la ventana modal
+                modal.style.display = 'block';
+            }
+            
+            // Función para cerrar la ventana modal
+            function closeModal() {
+                var modal = document.getElementById("modal");
+                modal.style.display = "none";
+            }
+            
+            // Cerrar la ventana modal al hacer clic fuera de ella
+            window.onclick = function(event) {
+                var modal = document.getElementById("myModal");
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        <script>
+
+        </script>
+        <!-- Script externo -->
+        <script src="js/models/recipe.js"></script>
+        <script src="js/data/recipes.js"></script>
+    </body>
 </html>
