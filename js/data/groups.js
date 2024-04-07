@@ -133,7 +133,7 @@ let groups = [
         "0"
     ),
     new Group(
-        "Alimentos preparados altos en energia",
+        "Alimentos preparados altos en energia", //avoid consumption
         "0",
         "0",
         "0",

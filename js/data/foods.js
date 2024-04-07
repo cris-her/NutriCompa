@@ -3,5 +3,17 @@ let foods = fatFreeCerealsAndTubers.concat(
     freeConsumptionVegetables,
     vegetables,
     fruitsRichInFiberAndLowInSugar,
-    foodsOfAnimalOriginVeryLowInFat
+    foodsOfAnimalOriginVeryLowInFat, 
+    moderateFatAnimalFoods,
+    highFatAnimalFoods,
+    moderateHighCalciumSkimMilk,
+    moderateHighCalciumWholeMilk,
+    legumes,
+    monounsaturatedFatsWithProtein,
+    polyunsaturatedFats,
+    saturatedAndTransFats,
+    sugars,
+    sugarsWithFat,
+    energyFreeFoods,
+    highEnergyPreparedFoods
 );
