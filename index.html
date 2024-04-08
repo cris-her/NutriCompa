@@ -151,9 +151,65 @@
                 width: 80%;
             }
         </style>
+            <style>
+                /* Estilos para el contenedor de los radio buttons */
+                #radio-container {
+                    text-align: center;
+                    margin-top: 20px;
+                }
+        
+                /* Estilos para los radio buttons */
+                #radio-container input[type="radio"] {
+                    display: none;
+                }
+        
+                #radio-container label {
+                    display: inline-block;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background-color: #ccc;
+                    margin: 0 10px;
+                    cursor: pointer;
+                }
+        
+                /* Estilos para cuando un radio button está seleccionado */
+                #radio-container input[type="radio"]:checked + label {
+                    background-color: #4caf50;
+                }
+
+                /* Estilos para los botones adicionales */
+                #button-container {
+                    text-align: center;
+                    margin-top: 20px;
+                    display: none; /* Ocultar inicialmente */
+                }
+
+                #button-container button {
+                    padding: 10px 20px;
+                    margin: 0 10px;
+                    cursor: pointer;
+                }
+            </style>
     </head>
 
     <body>
+        <div id="radio-container">
+            <input checked type="radio" id="radio1" name="radios" onclick="clearAll()">
+            <label for="radio1"></label>
+        
+            <input type="radio" id="radio2" name="radios" onclick="handleRadioChange('a')">
+            <label for="radio2"></label>
+        
+            <input type="radio" id="radio3" name="radios" onclick="handleRadioChange('c')">
+            <label for="radio3"></label>
+        </div>
+
+        <div id="button-container">
+            <button onclick="save()">Guardar</button>
+            <button onclick="copy()">Copiar</button>
+        </div>
+
         <h1>Calculadora de Requerimiento Calórico</h1>
         <form id="calculoRequerimiento" onsubmit="calcularCalorias(); return false;">
             <div>
@@ -204,10 +260,10 @@
                     <th></th>
                     <th>Lunes</th>
                     <th>Martes</th>
-                    <th>Miércoles</th>
+                    <th>Miercoles</th>
                     <th>Jueves</th>
                     <th>Viernes</th>
-                    <th>Sábado</th>
+                    <th>Sabado</th>
                     <th>Domingo</th>
                 </tr>
             </thead>
@@ -223,7 +279,7 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Colación</td>
+                    <td>Almuerzo</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -243,7 +299,7 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Colación</td>
+                    <td>Merienda</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -290,6 +346,182 @@
             <!-- Aquí se agregarán dinámicamente los elementos de la lista de compras -->
         </ul>
 
+        <script>
+            var currentUser;
+
+            function handleRadioChange(usr) {
+                currentUser = usr;
+
+                // let url = "https://jsonfileapi.onrender.com/"+usr;
+                let url = "http://127.0.0.1:5000/"+usr;
+
+                makeRequest(url);
+
+                // Mostrar los botones cuando se selecciona el segundo o tercer radio button
+                document.getElementById('button-container').style.display = 'block';
+            }
+
+            function save() {
+                // Lógica para el botón "Guardar"
+                console.log('Guardando...');
+
+                // Recopilar información del formulario
+                var formData = {
+                    age: document.getElementById('edad').value,
+                    exercise: document.getElementById('ejercicio').value,
+                    height: document.getElementById('altura').value,
+                    objective: document.getElementById('objetivo').value,
+                    weight: document.getElementById('peso').value,
+                    sex: document.getElementById('sexo').value
+                };
+
+                /*
+                let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+                // Recopilar información de la tabla
+                var tableData = {};
+                var table = document.getElementById('planificacion');
+                var rows = table.getElementsByTagName('tr');
+                for (var i = 1; i < rows.length - 1; i++) {
+                    var row = rows[i];
+                    var cells = row.getElementsByTagName('td');
+                    var meal = meals[i-1]; // Obtener el nombre de la comida usando el índice
+                    tableData[meal.toLowerCase()] = {};
+                    for (var j = 1; j < cells.length; j++) {
+                        var day = daysOfWeek[j-1]; // Obtener el nombre del día usando el índice
+                        tableData[meal.toLowerCase()][day] = cells[j].innerText;
+                    }
+                }
+                */
+                let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+                // Recopilar información de la tabla
+                var tableData = {};
+                var table = document.getElementById('planificacion');
+                var rows = table.getElementsByTagName('tr');
+                for (var j = 1; j < rows[0].cells.length; j++) {
+                    var day = daysOfWeek[j-1]; // Obtener el nombre del día usando el índice
+                    tableData[day.toLowerCase()] = {};
+                    for (var i = 1; i < rows.length - 1; i++) {
+                        var row = rows[i];
+                        var cells = row.getElementsByTagName('td');
+                        var meal = meals[i-1]; // Obtener el nombre de la comida usando el índice
+                        tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].innerText;
+                    }
+                }
+
+
+
+                // Construir el objeto JSON
+                var jsonData = {
+                    menu: tableData,
+                    profile: formData
+                };
+
+                // Enviar la solicitud HTTP POST
+                fetch(`http://127.0.0.1:5000/${currentUser}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data saved successfully:', data);
+                    // Hacer algo con la respuesta si es necesario
+                })
+                .catch(error => {
+                    console.error('Error saving data:', error);
+                });
+
+                alert("Guardado!")
+            }
+
+            function copy() {
+                // Lógica para el botón "Copiar"
+                console.log('Copiando...');
+            }
+
+            function makeRequest(url) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        fillForm(response.profile);
+                        fillTable(response.menu);
+                    }
+                };
+                xhr.send();
+            }
+        
+            function fillForm(profile) {
+                document.getElementById('edad').value = profile.age;
+                document.getElementById('altura').value = profile.height;
+                document.getElementById('peso').value = profile.weight;
+                document.getElementById('sexo').value = profile.sex;
+                document.getElementById('ejercicio').value = profile.exercise;
+                document.getElementById('objetivo').value = profile.objective;
+
+                calcularCalorias();
+            }
+
+            function clearAll() {
+                document.getElementById('edad').value = "";
+                document.getElementById('altura').value = "";
+                document.getElementById('peso').value = "";
+                document.getElementById('sexo').value = "";
+                document.getElementById('ejercicio').value = "";
+                document.getElementById('objetivo').value = "";
+                document.getElementById('resultado').innerText = "";
+
+                // Lógica para limpiar el formulario
+                console.log('Formulario limpiado.');
+                // Ocultar los botones cuando se selecciona el primer radio button
+                document.getElementById('button-container').style.display = 'none';
+
+                // Limpiar tabla
+                let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
+                let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+                for (var i = 0; i < meals.length; i++) {
+                    var meal = meals[i];
+                    var row = table.rows[i];
+                    var cells = row.cells;
+                    //cells[0].textContent = meal.charAt(0).toUpperCase() + meal.slice(1); // Capitalize the meal name
+                    for (var j = 0; j < daysOfWeek.length; j++) {
+                        var day = daysOfWeek[j];
+                        cells[j + 1].textContent = "";
+                    }
+                }
+            }
+
+            function fillTable(menu) {
+                let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
+                let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+                for (var i = 0; i < meals.length; i++) {
+                    var meal = meals[i];
+                    var row = table.rows[i];
+                    var cells = row.cells;
+                    //cells[0].textContent = meal.charAt(0).toUpperCase() + meal.slice(1); // Capitalize the meal name
+                    for (var j = 0; j < daysOfWeek.length; j++) {
+                        var day = daysOfWeek[j];
+                        cells[j + 1].textContent = menu[day][meal];
+                    }
+                }
+            }
+        </script>
 
         <script>
             function calcularCalorias() {
