@@ -343,6 +343,10 @@
             </div>
         </div>
 
+        <h2>Lista de Instrucciones</h2>
+        <ul id="listaInstrucciones">
+        </ul>
+
         <h2>Lista de Compras</h2>
         <ul id="listaCompras">
             <!-- Aquí se agregarán dinámicamente los elementos de la lista de compras -->
@@ -592,9 +596,34 @@
                     const listItem = document.createElement('li');
                     listItem.textContent = recipe.name;
                     listItem.addEventListener('click', function() {
+                            // Mostrar el nombre de la receta en la celda
+                        cell.innerHTML = `<strong>${recipe.name}</strong><br><br>`;
+
+                        // Mostrar los ingredientes debajo del nombre de la receta
+                        // recipe.ingredients.forEach(ingredient => {
+                        //     cell.innerHTML += `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}<br>`;
+                        // });
+                        
+                        // Crear una lista no ordenada para los ingredientes
+                        const ingredientsList = document.createElement('ul');
+                        ingredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+
+                        // Agregar cada ingrediente a la lista
+                        recipe.ingredients.forEach(ingredient => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                            ingredientsList.appendChild(listItem);
+                        });
+
+                        // Agregar la lista de ingredientes debajo del nombre de la receta
+                        cell.appendChild(ingredientsList);
+
                         // Al hacer clic en una receta, mostrarla en la celda correspondiente
-                        cell.textContent = recipe.name;
+                        cell.id = recipe.name;
+
+                        //cell.textContent = recipe.name;
                         closeModal();
+                        generateInstructionsAndIngredients();//!!!!!!
                     });
                     recipeList.appendChild(listItem);
                 });
@@ -618,6 +647,64 @@
             }
         </script>
         <script>
+
+            function generateInstructionsAndIngredients() {
+                let allInstructions = []; // Lista de instrucciones única
+                let allIngredients = {}; // Objeto para almacenar ingredientes
+
+                // Recorrer la tabla de planificación
+                let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
+                let rows = table.getElementsByTagName("tr");
+                for (let i = 0; i < rows.length - 1; i++) { // Ignorar la última fila (Total)
+                    let cells = rows[i].getElementsByTagName("td");
+                    for (let j = 1; j < cells.length; j++) {
+                        //let recipeName = cells[j].textContent.trim();
+                        //let recipeName = cells[j].querySelector('strong').textContent.trim();
+                        let recipeName = cells[j].id
+                        //(recipeName)
+                        if (recipeName !== "") { // Verificar si hay una receta
+                            // Buscar la receta en la lista de recetas
+                            let recipe = recipes.find(recipe => recipe.name === recipeName);
+                            if (recipe) {
+                                // Agregar instrucciones de la receta a la lista de instrucciones únicas
+                                if (recipe.preparation && !allInstructions.includes(`${recipe.name}: ${recipe.preparation}`)) {
+                                    allInstructions.push(`${recipe.name}: ${recipe.preparation}`);
+                                }
+                                // Sumar los ingredientes de la receta
+                                recipe.ingredients.forEach(ingredient => {
+                                    let key = ingredient.name.toLowerCase(); // Convertir el nombre del ingrediente a minúsculas
+                                    if (key in allIngredients) {
+                                        allIngredients[key].portion += ingredient.portion;
+                                    } else {
+                                        allIngredients[key] = { portion: ingredient.portion, unit: ingredient.unit };
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+
+                // Mostrar las instrucciones en la lista de instrucciones
+                let listaInstrucciones = document.getElementById("listaInstrucciones");
+                listaInstrucciones.innerHTML = "";
+                //listaInstrucciones.innerHTML = "<h2>Lista de Instrucciones</h2>";
+                allInstructions.forEach(instruction => {
+                    let li = document.createElement("li");
+                    li.textContent = instruction;
+                    listaInstrucciones.appendChild(li);
+                });
+
+                // Mostrar los ingredientes en la lista de compras
+                let listaCompras = document.getElementById("listaCompras");
+                listaCompras.innerHTML = "";
+
+                //listaCompras.innerHTML = "<h2>Lista de Compras</h2>";
+                for (let ingredient in allIngredients) {
+                    let li = document.createElement("li");
+                    li.textContent = `${allIngredients[ingredient].portion} ${allIngredients[ingredient].unit} de ${ingredient}`;
+                    listaCompras.appendChild(li);
+                }
+            }
 
         </script>
         <!-- Script externo -->
