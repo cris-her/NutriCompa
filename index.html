@@ -353,6 +353,80 @@
         </ul>
 
         <script>
+            function updateTotals() {
+                // Obtener la tabla y las filas de la tabla
+                let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
+                let rows = table.getElementsByTagName("tr");
+
+                // Array para los días de la semana
+                let daysOfWeek = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+
+                // Iterar sobre cada columna (día)
+                for (let i = 1; i < rows[0].cells.length; i++) { // Empezamos desde 1 para omitir la primera celda (nombre de la comida)
+                    // Variables para almacenar los totales de calorías, carbohidratos, proteínas y grasas
+                    let totalCalories = 0;
+                    let totalCarbohydrates = 0;
+                    let totalProteins = 0;
+                    let totalFats = 0;
+
+                    // Iterar sobre cada fila (comida)
+                    for (let j = 0; j < rows.length - 1; j++) {
+                        // Obtener el nombre de la receta del ID de la celda
+                        let recipeName = rows[j].cells[i].id;
+
+                        // Verificar si la celda contiene una receta
+                        if (recipeName !== "") {
+                            //alert(recipeName)
+
+                            // Buscar la receta en la lista de recetas
+                            let recipe = recipes.find(recipe => recipe.name === recipeName);
+
+                            // Si se encuentra la receta
+                            if (recipe) {
+                                //alert('recipe')
+                                // Iterar sobre los ingredientes de la receta
+                                recipe.ingredients.forEach(ingredient => {
+                                    //alert(ingredient.name)
+                                    // Buscar el alimento correspondiente al ingrediente
+                                    let food = foods.find(food => food.name === ingredient.name);
+                                    if (food) {
+                                        //alert('food')
+                                        // Buscar el grupo al que pertenece el alimento
+                                        let group = groups.find(group => group.name === food.group);
+                                        if (group) {
+                                            //alert('group')
+                                            // Calcular el total de calorías, carbohidratos, proteínas y grasas
+                                            let portion = parseFloat(ingredient.portion);
+                                            totalCalories += (portion * parseFloat(group.energy));
+                                            totalCarbohydrates += (portion * parseFloat(group.carbohydrates));
+                                            totalProteins += (portion * parseFloat(group.proteins));
+                                            totalFats += (portion * parseFloat(group.fat));
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    // Actualizar la celda de Total para el día correspondiente con los totales calculados
+                    let totalCell = rows[rows.length - 1].cells[i];
+                    //totalCell.textContent = `Calorías: ${totalCalories.toFixed(2)}, Carbohidratos: ${totalCarbohydrates.toFixed(2)}g, Proteínas: ${totalProteins.toFixed(2)}g, Grasas: ${totalFats.toFixed(2)}g`;
+                    totalCell.innerHTML = `
+                        <span style="font-size: 80%; color: #333;">
+                            Calorías: <strong>${totalCalories.toFixed(2)}</strong>,<br> 
+                            Carbohidratos: <strong>${totalCarbohydrates.toFixed(2)}g</strong>,<br>
+                            Proteínas: <strong>${totalProteins.toFixed(2)}g</strong>,<br> 
+                            Grasas: <strong>${totalFats.toFixed(2)}g</strong>
+                        </span>`;
+
+                }
+            }
+
+
+
+        </script>
+
+        <script>
             var currentUser;
 
             function handleRadioChange(usr) {
@@ -624,6 +698,7 @@
                         //cell.textContent = recipe.name;
                         closeModal();
                         generateInstructionsAndIngredients();//!!!!!!
+                        updateTotals();
                     });
                     recipeList.appendChild(listItem);
                 });
@@ -709,10 +784,37 @@
         </script>
         <!-- Script externo -->
         <script src="js/models/recipe.js"></script>
+        <script src="js/models/food.js"></script>
+        <script src="js/models/group.js"></script>
+
+        <script src="js/data/groups.js"></script>
+
         <script src="js/data/recipes/breakfasts.js"></script>
         <script src="js/data/recipes/lunches.js"></script>
         <script src="js/data/recipes/dinners.js"></script>
         <script src="js/data/recipes/snacks.js"></script>
         <script src="js/data/recipes.js"></script>
+
+        <script src="js/data/foods/cerealsAndTubersWithFat.js"></script>
+        <script src="js/data/foods/energyFreeFoods.js"></script>
+        <script src="js/data/foods/fatFreeCerealsAndTubers.js"></script>
+        <script src="js/data/foods/foodsOfAnimalOriginVeryLowInFat.js"></script>
+        <script src="js/data/foods/freeConsumptionVegetables.js"></script>
+        <script src="js/data/foods/fruitsRichInFiberAndLowInSugar.js"></script>
+        <script src="js/data/foods/highEnergyPreparedFoods.js"></script>
+        <script src="js/data/foods/highFatAnimalFoods.js"></script>
+        <script src="js/data/foods/highSodiumEnergyFreeFoods.js"></script>
+        <script src="js/data/foods/legumes.js"></script>
+        <script src="js/data/foods/lowFatAnimalFoods.js"></script>
+        <script src="js/data/foods/moderateFatAnimalFoods.js"></script>
+        <script src="js/data/foods/moderateHighCalciumSkimMilk.js"></script>
+        <script src="js/data/foods/moderateHighCalciumWholeMilk.js"></script>
+        <script src="js/data/foods/monounsaturatedFatsWithProtein.js"></script>
+        <script src="js/data/foods/saturatedAndTransFats.js"></script>
+        <script src="js/data/foods/polyunsaturatedFats.js"></script>
+        <script src="js/data/foods/sugars.js"></script>
+        <script src="js/data/foods/sugarsWithFat.js"></script>
+        <script src="js/data/foods/vegetables.js"></script>
+        <script src="js/data/foods.js"></script>
     </body>
 </html>
