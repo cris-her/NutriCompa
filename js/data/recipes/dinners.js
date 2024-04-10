@@ -20,7 +20,7 @@ let dinners = [
         { name: "Alga", portion: 1, unit: "unit" }
     ]),
     /////////////////////////////////////////////////////////////////////
-    new Recipe("Pasta", "Cena", "", [
+    new Recipe("Pastaaa", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
         { name: "salsa_", portion: 200, unit: "ml" },
         { name: "pollo", portion: 100, unit: "g" }
