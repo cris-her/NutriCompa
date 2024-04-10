@@ -84,7 +84,7 @@ let groups = [
         "8"
     ),
     new Group(
-        "Grasas monoinsaturadas con proteina",
+        "Grasas monoinsaturadas con proteína",
         "70",
         "3",
         "5",

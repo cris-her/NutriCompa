@@ -4,6 +4,7 @@ let foods = fatFreeCerealsAndTubers.concat(
     vegetables,
     fruitsRichInFiberAndLowInSugar,
     foodsOfAnimalOriginVeryLowInFat, 
+    foodsOfAnimalOriginLowInFat,
     moderateFatAnimalFoods,
     highFatAnimalFoods,
     moderateHighCalciumSkimMilk,

@@ -1,5 +1,12 @@
 # NutriCompa
 
+### Macros
+Cada uno de estos macronutrientes tienen la siguiente energía o calorías:
+
+- 1 g de proteínas → 4 Kcal
+- 1g de hidratos de carbono → 4 Kcal
+- 1g de grasa → 9 Kcal
+
 ### Peso normal
 
 Si el Índice de Masa Corporal indica que el peso es apropiado, un plan de alimentación servirá para mejorar y mantener hábitos de alimentación así como para prevenir el sobrepeso.
