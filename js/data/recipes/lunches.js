@@ -23,5 +23,34 @@ let lunches = [
         { name: "Salsa de soya", portion: 1, unit: "cucharadita" },
         /*{ name: "Fideo chino", portion: 42.5, unit: "gramos" },*/
         { name: "Calabacita cocida", portion: 1/4, unit: "taza" }
-    ])
+    ]),
+
+    new Recipe("Pollo con chipotle en tostadas", "Comida", "Agarrar la pechuga y sazonarla y dejar reposar durante 20 minutos, cocinarlo con la piña y a las tostadas ponerles aguacate y lechuga, servir el pollo y acompañarlo con cilantro", [
+        { name: "Fajitas de pollo sin piel", portion: 125, unit: "gramos" },
+        { name: "Sal", portion: 1, unit: "cucharadita" },
+        { name: "Pimienta", portion: 1, unit: "cucharadita" },
+        { name: "Ajo en polvo", portion: 1/2, unit: "cucharadita" },
+        /*{ name: "Chile chipotle", portion: 4, unit: "cucharada" },*/
+        { name: "Aguacate", portion: 4, unit: "cucharadita" },
+        { name: "Tostada", portion: 2, unit: "pieza" },
+        { name: "Cilantro", portion: 1/8, unit: "taza" },
+        { name: "Piña picada", portion: 1/8, unit: "taza" },
+        { name: "Aceite de oliva", portion: 1, unit: "cucharadita" },
+    ]),
+    new Recipe("Pollo con champiñones", "Comida", "Poner a freir las pechugas ydespues retirar del fuego, poner a cocer los champiñones y agregar ajo y dejar hast que se suavicen, agregar la harina, la pimienta y la albaca. revolver y agregar  una taza de agua y la crema, dejar que se caliente y agregar el queso parmesano y las pechugas ", [
+        { name: "Pechuga de pollo deshuesada", portion: 125, unit: "gramos" },
+        { name: "Champiñón cocido rebanado", portion: 1/4, unit: "taza" },
+        { name: "Harina de arroz", portion: 1, unit: "cucharada" },
+       /* { name: "Albaca", portion: 1, unit: "cucharada" },*/
+        { name: "Pimienta", portion: 1, unit: "cucharadita" },
+        { name: "Queso parmesano", portion: 2, unit: "cucharadas" },
+        { name: "Media crema", portion: 4, unit: "cucharada" }
+    ]),
+
+/*  new Recipe("Pasta", "Cena", "", [
+        { name: "pasta", portion: 300, unit: "g" },
+        { name: "salsa_", portion: 200, unit: "ml" },
+        { name: "pollo", portion: 100, unit: "g" }
+    ]),
+    */
 ];

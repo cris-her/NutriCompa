@@ -20,7 +20,7 @@ let breakfasts = [
      new Recipe("Jugo verde(Kiwi y platano)", "Desayuno", "Licuar todo", [
         { name: "Espinaca cruda", portion: 2, unit: "taza" },
         { name: "Plátano tabasco", portion: 1, unit: "pieza" },
-        { name: "Kiwi", portion: 200, unit: "pieza" },
+        { name: "Kiwi", portion: 2, unit: "pieza" },
         /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
     ]),
     new Recipe("Jugo verde(Mango y platano)", "Desayuno", "Licuar todo", [
@@ -41,5 +41,26 @@ let breakfasts = [
         /*{ name: "Blueberry", portion: 200, unit: "pieza" },*/
         /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
     ]),
+    new Recipe("Pudding de chia con mango", "Desayuno", "Juntar la avena, la chia. con la leche y vainilla, revolver todo para que no queden grumos, dejar en la noche reposar, licuar un mango y colocarlo con la mezcla anterior", [
+        { name: "Chia", portion: 2, unit: "cucharadas" },
+        { name: "Avena en hojuelas", portion: 1/3, unit: "taza" },
+        { name: "Mango ataulfo", portion: 1/2, unit: "pieza" },
+        { name: "Leche entera", portion: 1/2, unit: "taza" }
+    ]),
+    new Recipe("Omelette con zanahoria y calabaza", "Desayuno", "Rallar la zanahoria y la calabza, juntar el huevo con la calabaza y zanahoria, agregar pimienta negra y paprika, revolver y cocinar en el sarten, agregar queso", [
+        { name: "Huevo", portion: 1, unit: "pieza" },
+        { name: "Calabacita cocida", portion: 1/4, unit: "taza" },
+        { name: "Pimienta", portion: 1, unit: "cucharadita" },
+        /*{ name: "Paprika", portion: 200, unit: "ml" },*/
+        { name: "Queso Oaxaca", portion: 30, unit: "gramos" },
+        { name: "Zanahoria Picada o rallada", portion: 1/4, unit: "taza" }
+    ]),
+
+/*  new Recipe("Pasta", "Cena", "", [
+        { name: "pasta", portion: 300, unit: "g" },
+        { name: "salsa_", portion: 200, unit: "ml" },
+        { name: "pollo", portion: 100, unit: "g" }
+    ]),
+    */
      
  ];

@@ -30,6 +30,15 @@ let dinners = [
         { name: "Atún en aceite", portion: 130, unit: "gramos" },
         { name: "Galleta salada", portion: 3, unit: "piezas" }
     ]),
+    new Recipe("Calabaza con jitomate", "Cena", "Rebanar la calabaza el tiras ", [
+        { name: "Jamon", portion: 300, unit: "g" },
+        { name: "Calabacita cocida", portion: 1/4, unit: "taza" },
+        { name: "Aceite de oliva", portion: 1, unit: "cucharadita" },
+        { name: "Queso manchego", portion: 200, unit: "ml" },
+        { name: "Jitomate", portion: 100, unit: "g" }
+        { name: "Sal", portion: 1, unit: "cucharadita" },
+        { name: "Pimienta", portion: 1, unit: "cucharadita" },
+    ]),
     /////////////////////////////////////////////////////////////////////
     /*new Recipe("Pastaaa", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
