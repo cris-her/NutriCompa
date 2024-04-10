@@ -332,16 +332,16 @@
         <form id="calculoRequerimiento" onsubmit="calcularCalorias(); return false;">
             <div>
                 <label for="edad">Edad:</label>
-                <input type="number" id="edad" name="edad" required>
+                <input value="30" type="number" id="edad" name="edad" required>
             </div>
             <div>
                 <label for="altura">Altura (cm):</label>
-                <input type="number" id="altura" name="altura" required>
+                <input value="150" type="number" id="altura" name="altura" required>
             </div>
 
             <div>
                 <label for="peso">Peso (kg):</label>
-                <input type="number" id="peso" name="peso" required>
+                <input value="50" type="number" id="peso" name="peso" required>
             </div>
 
             <div>
@@ -578,11 +578,44 @@
                                         if (group) {
                                             //alert('group')
                                             // Calcular el total de calorías, carbohidratos, proteínas y grasas
-                                            let portion = parseFloat(ingredient.portion);
-                                            totalCalories += (portion * parseFloat(group.energy));
-                                            totalCarbohydrates += (portion * parseFloat(group.carbohydrates));
-                                            totalProteins += (portion * parseFloat(group.proteins));
-                                            totalFats += (portion * parseFloat(group.fat));
+                                            
+                                            // let portion = parseFloat(ingredient.portion);
+                                            // totalCalories += (portion * parseFloat(group.energy));
+                                            // totalCarbohydrates += (portion * parseFloat(group.carbohydrates));
+                                            // totalProteins += (portion * parseFloat(group.proteins));
+                                            // totalFats += (portion * parseFloat(group.fat));
+
+                                            // let portion = parseFloat(ingredient.portion);
+
+                                            // // Calcular el factor de ajuste para las calorías y los macronutrientes
+                                            // let adjustFactor = portion / parseFloat(food.portion);
+
+                                            // // Ajustar las calorías y los macronutrientes según el factor de ajuste
+                                            // totalCalories += (adjustFactor * parseFloat(group.energy));
+                                            // totalCarbohydrates += (adjustFactor * parseFloat(group.carbohydrates));
+                                            // totalProteins += (adjustFactor * parseFloat(group.proteins));
+                                            // totalFats += (adjustFactor * parseFloat(group.fat));
+
+                                            // Calcular el factor de ajuste
+                                            
+                                            let adjustFactor = parseFloat(ingredient.portion) / parseFloat(food.portion);
+                                            //alert(`${ingredient.name} ${parseFloat(ingredient.portion)} ${parseFloat(food.portion)} ${adjustFactor}`)
+                                            // Calcular las calorías ajustadas según el factor de ajuste
+                                            let adjustedCalories = parseFloat(group.energy) * adjustFactor;
+                                            // Calcular los carbohidratos ajustados según el factor de ajuste
+                                            let adjustedCarbohydrates = parseFloat(group.carbohydrates) * adjustFactor;
+                                            // Calcular las proteínas ajustadas según el factor de ajuste
+                                            let adjustedProteins = parseFloat(group.proteins) * adjustFactor;
+                                            // Calcular las grasas ajustadas según el factor de ajuste
+                                            let adjustedFats = parseFloat(group.fat) * adjustFactor;
+                                            // Sumar las calorías ajustadas a totalCalories
+                                            totalCalories += adjustedCalories;
+                                            // Sumar los carbohidratos ajustados a totalCarbohydrates
+                                            totalCarbohydrates += adjustedCarbohydrates;
+                                            // Sumar las proteínas ajustadas a totalProteins
+                                            totalProteins += adjustedProteins;
+                                            // Sumar las grasas ajustadas a totalFats
+                                            totalFats += adjustedFats;
                                         }
                                     }
                                 });
@@ -1102,7 +1135,7 @@
         <script src="js/data/foods/highFatAnimalFoods.js"></script>
         <script src="js/data/foods/highSodiumEnergyFreeFoods.js"></script>
         <script src="js/data/foods/legumes.js"></script>
-        <script src="js/data/foods/lowFatAnimalFoods.js"></script>
+        <script src="js/data/foods/foodsOfAnimalOriginLowInFat.js"></script>
         <script src="js/data/foods/moderateFatAnimalFoods.js"></script>
         <script src="js/data/foods/moderateHighCalciumSkimMilk.js"></script>
         <script src="js/data/foods/moderateHighCalciumWholeMilk.js"></script>
