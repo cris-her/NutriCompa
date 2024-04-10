@@ -6,7 +6,7 @@
         <title>NutriCompa</title>
         <link rel="icon" type="image/png" href="nutriCompa.png">
 
-        <style>
+        <!--<style>
             body {
                 font-family: Arial, sans-serif;
             }
@@ -36,7 +36,84 @@
                 text-align: center;
                 margin-top: 20px;
             }
-        </style>
+        </style> --> 
+        <style>
+            .invisible-button {
+                visibility: hidden;
+            }
+
+            .shopping-lists {
+                display: flex;
+            }
+
+            .shopping-list {
+                flex: 1;
+                margin-right: 20px; /* Espacio entre las listas */
+            }
+
+            /* Estilo adicional para las listas de compras */
+            .shopping-list ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            /* CSS to disable the table */
+            /* #planificacion.disabled {
+                pointer-events: none;  Disable pointer events 
+                opacity: 0.5; Optionally adjust opacity to visually indicate disabled state 
+            } */
+            .disabled {
+                pointer-events: none;
+                opacity: 0.6; /* Optional: This will visually indicate that the table is disabled */
+            }
+
+            #calculoRequerimiento {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+        
+            #calculoRequerimiento div {
+                /* flex: 0 0 48%; */
+                flex: 0 0 calc(33.333% - 10px); /* Cambiado el ancho para que ocupe un tercio del espacio disponible */
+                /* margin-bottom: 10px; */
+            }
+        
+            #calculoRequerimiento label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+        
+            #calculoRequerimiento input,
+            #calculoRequerimiento select {
+                width: calc(100% - 10px);
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
+        
+            #calculoRequerimiento button {
+                width: 100%;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+        
+            #resultado {
+                margin-top: 20px;
+                text-align: center;
+                font-weight: bold;
+            }
+        </style> 
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -52,10 +129,10 @@
                 margin-bottom: 20px;
             }
 
-            form {
+            /* form {
                 margin-bottom: 20px;
                 text-align: center;
-            }
+            } */
 
             label {
                 display: block;
@@ -157,18 +234,22 @@
                 /* Estilos para el contenedor de los radio buttons */
                 #radio-container {
                     text-align: center;
-                    margin-top: 20px;
+                    margin-top: 5px;
+                    margin-bottom: 10px;
+
                 }
         
                 /* Estilos para los radio buttons */
                 #radio-container input[type="radio"] {
                     display: none;
                 }
+
+
         
                 #radio-container label {
                     display: inline-block;
-                    width: 30px;
-                    height: 30px;
+                    width: 15px;
+                    height: 15px;
                     border-radius: 50%;
                     background-color: #ccc;
                     margin: 0 10px;
@@ -176,63 +257,101 @@
                 }
         
                 /* Estilos para cuando un radio button está seleccionado */
-                #radio-container input[type="radio"]:checked + label {
+                /* #radio-container input[type="radio"]:checked + label {
                     background-color: #4caf50;
+                } */
+/* 
+                /* Estilos para el radio azul cuando está seleccionado */
+                #radio-container input.blue:checked + label {
+                    background-color: blue;
                 }
 
+                /* Estilos para el radio verde cuando está seleccionado */
+                #radio-container input.green:checked + label {
+                    background-color: green;
+                }
+
+                /* Estilos para el radio rojo cuando está seleccionado */
+                #radio-container input.red:checked + label {
+                    background-color: red;
+                }
+
+                .button-container {
+                    margin-top: 20px;
+                }
                 /* Estilos para los botones adicionales */
-                #button-container {
+                /* #button-container {
                     text-align: center;
                     margin-top: 20px;
-                    display: none; /* Ocultar inicialmente */
+ 
+                    display: flex; 
                 }
 
                 #button-container button {
-                    padding: 10px 20px;
+                    padding: 10px 20px; 
                     margin: 0 10px;
                     cursor: pointer;
+                } */
+                /* #button-container {
+                    display: flex;
+                    justify-content: space-between; Distribuye los botones equitativamente en el contenedor 
+                    margin-top: 20px; Añade un margen superior para separar los botones del resto del formulario 
                 }
+
+                #button-container button {
+                    flex: 1; Los botones ocuparán todo el espacio disponible horizontalmente 
+                    padding: 10px; Añade relleno para hacer los botones más grandes 
+                    border: none; Quita el borde de los botones 
+                    background-color: #4CAF50; Color de fondo 
+                    color: white; Color del texto 
+                    cursor: pointer; Cambia el cursor al pasar sobre los botones 
+                    border-radius: 5px; Añade bordes redondeados 
+                    transition: background-color 0.3s; Agrega una transición suave para el cambio de color de fondo
+                }
+
+                #button-container button:hover {
+                    background-color: #45a049; Cambia el color de fondo al pasar el mouse sobre los botones
+                } */
+
             </style>
     </head>
 
     <body>
         <div id="radio-container">
-            <input checked type="radio" id="radio1" name="radios" onclick="clearAll()">
+            <input class="blue" checked type="radio" id="radio1" name="radios" onclick="clearAll()">
             <label for="radio1"></label>
         
-            <input type="radio" id="radio2" name="radios" onclick="handleRadioChange('a')">
+            <input class="green" type="radio" id="radio2" name="radios" onclick="handleRadioChange('a')">
             <label for="radio2"></label>
         
-            <input type="radio" id="radio3" name="radios" onclick="handleRadioChange('c')">
+            <input class="red" type="radio" id="radio3" name="radios" onclick="handleRadioChange('c')">
             <label for="radio3"></label>
         </div>
 
-        <div id="button-container">
-            <button onclick="save()">Guardar</button>
-            <button onclick="copy()">Copiar</button>
-        </div>
-
-        <h1>Calculadora de Requerimiento Calórico</h1>
+        <!-- <h1>Calculadora de Requerimiento Calórico</h1> -->
         <form id="calculoRequerimiento" onsubmit="calcularCalorias(); return false;">
             <div>
                 <label for="edad">Edad:</label>
                 <input type="number" id="edad" name="edad" required>
             </div>
             <div>
-                <label for="sexo">Sexo:</label>
-                <select id="sexo" name="sexo" required>
-                    <option value="hombre">Hombre</option>
-                    <option value="mujer">Mujer</option>
-                </select>
+                <label for="altura">Altura (cm):</label>
+                <input type="number" id="altura" name="altura" required>
             </div>
+
             <div>
                 <label for="peso">Peso (kg):</label>
                 <input type="number" id="peso" name="peso" required>
             </div>
+
             <div>
-                <label for="altura">Altura (cm):</label>
-                <input type="number" id="altura" name="altura" required>
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="mujer">Mujer</option>
+                    <option value="hombre">Hombre</option>
+                </select>
             </div>
+
             <div>
                 <label for="ejercicio">Nivel de ejercicio:</label>
                 <select id="ejercicio" name="ejercicio" required>
@@ -246,32 +365,40 @@
             <div>
                 <label for="objetivo">Objetivo:</label>
                 <select id="objetivo" name="objetivo" required>
-                    <option value="mantener">Mantener peso</option>
-                    <option value="bajar">Bajar de peso</option>
-                    <option value="aumentar">Aumentar masa muscular</option>
+                    <option value="mantener">Mantener peso (45% C, 30% P, 25% G)</option>
+                    <option value="bajar">Bajar de peso  (40% C, 35% P, 25% G)</option>
+                    <option value="aumentar">Aumentar masa muscular  (55% C, 20% P, 25% G)</option>
                 </select>
             </div>
-            <button type="submit">Calcular</button>
+            <div class="button-container">
+                <button id="saveBtn" class="invisible-button" onclick="save()">Guardar</button>
+            </div>
+            <div class="button-container">
+                <button id="caloriasRequeridas" type="submit">Calcular</button>
+            </div>
+            <div class="button-container">
+                <button id="copyBtn" class="invisible-button" onclick="copy()">Copiar</button>
+            </div>
         </form>
-        <div id="resultado"></div>
+        <div id="resultado"></div> 
 
-        <h2>Planificación Semanal de Comidas</h2>
-        <table id="planificacion">
+        <!-- <h2>Planificación Semanal de Comidas</h2> -->
+        <table class="disabled" id="planificacion">
             <thead>
                 <tr>
                     <th></th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miercoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                    <th>Sabado</th>
-                    <th>Domingo</th>
+                    <th>L</th>
+                    <th>M</th>
+                    <th>M</th>
+                    <th>J</th>
+                    <th>V</th>
+                    <th>S</th>
+                    <th>D</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Desayuno</td>
+                    <td>🥞</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -281,7 +408,7 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Almuerzo</td>
+                    <td>🥛</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -291,7 +418,7 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Comida</td>
+                    <td>🍜</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -301,7 +428,7 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Merienda</td>
+                    <td>🍦</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -311,7 +438,7 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Cena</td>
+                    <td>🍣</td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
@@ -321,7 +448,17 @@
                     <td contenteditable="true" onclick="showRecipeModal(this)"></td>
                 </tr>
                 <tr>
-                    <td>Total</td>
+                    <td>=</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>🧮</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -343,16 +480,61 @@
             </div>
         </div>
 
-        <h2>Lista de Instrucciones</h2>
+        <h2>Preparación</h2>
         <ul id="listaInstrucciones">
         </ul>
 
-        <h2>Lista de Compras</h2>
-        <ul id="listaCompras">
-            <!-- Aquí se agregarán dinámicamente los elementos de la lista de compras -->
-        </ul>
+        <h2>Lista de compras</h2>
+        <!-- <ul id="listaCompras">
+        </ul> -->
+        <div class="shopping-lists">
+            <div class="shopping-list">
+                <h2>=</h2>
+                <ul id="listaCompras">
+                    <!-- Elementos de la lista de compras 1 -->
+                </ul>
+            </div>
+            <div class="shopping-list">
+                <h2>🧮</h2>
+                <ul id="listaCompras2">
+                    <!-- Elementos de la lista de compras 2 -->
+                </ul>
+            </div>
+            <div class="shopping-list">
+                <h2>= a + c</h2>
+                <ul id="listaCompras3">
+                    <!-- Elementos de la lista de compras 3 -->
+                </ul>
+            </div>
+            <div class="shopping-list">
+                <h2>🧮 a + c</h2>
+                <ul id="listaCompras4">
+                    <!-- Elementos de la lista de compras 4 -->
+                </ul>
+            </div>
+        </div>
+        
 
         <script>
+            // Variable para almacenar si algún campo ha cambiado
+            //let camposCambiados = false;
+
+            // Obtener todos los campos del formulario
+            const camposFormulario = document.querySelectorAll("#calculoRequerimiento input, #calculoRequerimiento select");
+
+            // Agregar un controlador de eventos change a cada campo
+            camposFormulario.forEach(campo => {
+                campo.addEventListener("change", () => {
+                    //camposCambiados = true;
+                    document.getElementById('caloriasRequeridas').click();//submit
+                    //cleanResult()
+                });
+            });
+
+            function cleanResult(){
+                document.getElementById("caloriasRequeridas").textContent = "Calcular";
+            }
+
             function updateTotals() {
                 // Obtener la tabla y las filas de la tabla
                 let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
@@ -409,15 +591,46 @@
                     }
 
                     // Actualizar la celda de Total para el día correspondiente con los totales calculados
-                    let totalCell = rows[rows.length - 1].cells[i];
+                    let totalCell = rows[rows.length - 2].cells[i];
                     //totalCell.textContent = `Calorías: ${totalCalories.toFixed(2)}, Carbohidratos: ${totalCarbohydrates.toFixed(2)}g, Proteínas: ${totalProteins.toFixed(2)}g, Grasas: ${totalFats.toFixed(2)}g`;
+                    // Calcular el valor de los macronutrientes en kilocalorías
+                    let macros = (totalCarbohydrates.toFixed(2) * 4) + (totalProteins.toFixed(2) * 4) + (totalFats.toFixed(2) * 9)
+                    
+                    // Obtener las calorías requeridas del usuario
+                    //alert(user.calories);
+                    let userCalories = user.calories;
+
+                    // Establecer el estilo de la celda dependiendo de los valores de calorías requeridas, calorías totales y macronutrientes
+                    if (userCalories < totalCalories.toFixed(2) && userCalories < macros) {
+                        totalCell.style.backgroundColor = '#FF3B3B'; //red // Si las calorías requeridas son menores que las calorías totales o los macronutrientes, establecer el fondo rojo
+                    } else if (userCalories >= totalCalories.toFixed(2) && userCalories <= macros) {
+                        totalCell.style.backgroundColor = '#48BF3B';  //green // Si las calorías requeridas son mayores o iguales a las calorías totales y los macronutrientes, establecer el fondo verde
+                    } else {
+                        totalCell.style.backgroundColor = '#09D6DB'; //blue // Si no se cumple ninguna de las condiciones anteriores, establecer el fondo azul
+                    }
+                    
                     totalCell.innerHTML = `
+                        <span style="font-size: 80%; color: #333;">
+                            Calorías (avg): <strong>${totalCalories.toFixed(2)}</strong>,<br> 
+                            Macronutrientes (Kcal): <strong>${macros.toFixed(2)}</strong>,<br> 
+                            Carbohidratos (avg): <strong>${totalCarbohydrates.toFixed(2)}g</strong>,<br>
+                            Proteínas (avg): <strong>${totalProteins.toFixed(2)}g</strong>,<br> 
+                            Grasas (avg): <strong>${totalFats.toFixed(2)}g</strong>
+                        </span>
+                    `;
+
+                    // Actualizar la celda de Total para el día correspondiente con los totales calculados
+                    let algorithmCell = rows[rows.length - 1].cells[i];
+                    //totalCell.textContent = `Calorías: ${totalCalories.toFixed(2)}, Carbohidratos: ${totalCarbohydrates.toFixed(2)}g, Proteínas: ${totalProteins.toFixed(2)}g, Grasas: ${totalFats.toFixed(2)}g`;
+                    let algorithmMacros = (totalCarbohydrates.toFixed(2) * 4) + (totalProteins.toFixed(2) * 4) + (totalFats.toFixed(2) * 9)
+                    algorithmCell.innerHTML = `
                         <span style="font-size: 80%; color: #333;">
                             Calorías: <strong>${totalCalories.toFixed(2)}</strong>,<br> 
                             Carbohidratos: <strong>${totalCarbohydrates.toFixed(2)}g</strong>,<br>
                             Proteínas: <strong>${totalProteins.toFixed(2)}g</strong>,<br> 
                             Grasas: <strong>${totalFats.toFixed(2)}g</strong>
-                        </span>`;
+                        </span>                     
+                    `;
 
                 }
             }
@@ -438,7 +651,8 @@
                 makeRequest(url);
 
                 // Mostrar los botones cuando se selecciona el segundo o tercer radio button
-                document.getElementById('button-container').style.display = 'block';
+                document.getElementById('saveBtn').style.visibility = 'visible';
+                document.getElementById('copyBtn').style.visibility = 'visible';
             }
 
             function save() {
@@ -561,12 +775,15 @@
                 document.getElementById('sexo').value = "";
                 document.getElementById('ejercicio').value = "";
                 document.getElementById('objetivo').value = "";
-                document.getElementById('resultado').innerText = "";
+                //document.getElementById('resultado').innerText = "Calcular";
+                document.getElementById("caloriasRequeridas").textContent = "Calcular";
 
                 // Lógica para limpiar el formulario
                 console.log('Formulario limpiado.');
                 // Ocultar los botones cuando se selecciona el primer radio button
-                document.getElementById('button-container').style.display = 'none';
+                //document.getElementById('button-container').style.display = 'none';
+                document.getElementById('saveBtn').style.visibility = 'hidden';
+                document.getElementById('copyBtn').style.visibility = 'hidden';
 
                 // Limpiar tabla
                 let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -604,7 +821,9 @@
         </script>
 
         <script>
+            var user;
             function calcularCalorias() {
+
                 var edad = parseInt(document.getElementById('edad').value);
                 var sexo = document.getElementById('sexo').value;
                 var peso = parseInt(document.getElementById('peso').value);
@@ -646,7 +865,18 @@
                     totalCalorias *= 1.15;
                 }
 
-                document.getElementById('resultado').innerText = 'Calorías diarias necesarias: ' + totalCalorias.toFixed(2);
+                //console.log(totalCalorias.toFixed(2))
+                //alert(totalCalorias.toFixed(2))
+                //document.getElementById('resultado').innerText = 'Calorías diarias necesarias: ' + totalCalorias.toFixed(2);
+                document.getElementById("caloriasRequeridas").textContent = `${totalCalorias.toFixed(2)} Kcal`;
+                
+                // Example instantiation:
+                user = new User(edad, sexo, peso, altura, ejercicio, objetivo, totalCalorias.toFixed(2));
+
+                //document.getElementById("planificacion").enable = false;
+                document.getElementById('planificacion').classList.remove('disabled');
+
+                updateTotals();
             }
         </script>
         <script>
@@ -670,27 +900,66 @@
                     const listItem = document.createElement('li');
                     listItem.textContent = recipe.name;
                     listItem.addEventListener('click', function() {
-                            // Mostrar el nombre de la receta en la celda
+                        
+                        // // Mostrar el nombre de la receta en la celda
+                        // cell.innerHTML = `<strong>${recipe.name}</strong><br><br>`;
+
+                        // // Mostrar los ingredientes debajo del nombre de la receta
+                        // // recipe.ingredients.forEach(ingredient => {
+                        // //     cell.innerHTML += `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}<br>`;
+                        // // });
+                        
+                        // // Crear una lista no ordenada para los ingredientes
+                        // const ingredientsList = document.createElement('ul');
+                        // ingredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+
+                        // // Agregar cada ingrediente a la lista
+                        // recipe.ingredients.forEach(ingredient => {
+                        //     const listItem = document.createElement('li');
+                        //     listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                        //     ingredientsList.appendChild(listItem);
+                        // });
+
+                        // // Agregar la lista de ingredientes debajo del nombre de la receta
+                        // cell.appendChild(ingredientsList);
+                        // Mostrar el nombre de la receta en la celda
                         cell.innerHTML = `<strong>${recipe.name}</strong><br><br>`;
 
-                        // Mostrar los ingredientes debajo del nombre de la receta
-                        // recipe.ingredients.forEach(ingredient => {
-                        //     cell.innerHTML += `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}<br>`;
-                        // });
-                        
                         // Crear una lista no ordenada para los ingredientes
                         const ingredientsList = document.createElement('ul');
                         ingredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                        ingredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
 
-                        // Agregar cada ingrediente a la lista
+                        // Agregar cada ingrediente a la lista original
                         recipe.ingredients.forEach(ingredient => {
                             const listItem = document.createElement('li');
+                            listItem.style.marginBottom = '0px'; 
                             listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
                             ingredientsList.appendChild(listItem);
                         });
 
-                        // Agregar la lista de ingredientes debajo del nombre de la receta
+                        // Agregar la lista original de ingredientes debajo del nombre de la receta
                         cell.appendChild(ingredientsList);
+
+                        // Agregar un salto de línea entre las dos listas
+                        cell.appendChild(document.createElement('br'));
+
+                        // Crear una segunda lista de ingredientes
+                        const secondIngredientsList = document.createElement('ul');
+                        secondIngredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                        secondIngredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                        // Agregar cada ingrediente a la segunda lista
+                        recipe.ingredients.forEach(ingredient => {
+                            const listItem = document.createElement('li');
+                            listItem.style.marginBottom = '0px'; 
+                            listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                            secondIngredientsList.appendChild(listItem);
+                        });
+
+                        // Agregar la segunda lista de ingredientes debajo de la lista original
+                        cell.appendChild(secondIngredientsList);
+
 
                         // Al hacer clic en una receta, mostrarla en la celda correspondiente
                         cell.id = recipe.name;
@@ -765,7 +1034,34 @@
                 //listaInstrucciones.innerHTML = "<h2>Lista de Instrucciones</h2>";
                 allInstructions.forEach(instruction => {
                     let li = document.createElement("li");
-                    li.textContent = instruction;
+                    //li.textContent = instruction;
+                    // Dividir el string en dos partes usando el símbolo dos puntos como separador
+                    const parts = instruction.split(':');
+
+                    // Verificar si se encontró el símbolo dos puntos y si se dividió en dos partes
+                    if (parts.length === 2) {
+                        // Crear un elemento de texto para la primera parte (en negritas)
+                        const text1 = document.createElement('strong');
+                        text1.textContent = parts[0].trim() + ':';
+
+                        // Crear un elemento de texto para la segunda parte
+                        const text2 = document.createTextNode(parts[1].trim());
+
+                        // Crear un elemento span para envolver los dos textos
+                        const span = document.createElement('span');
+
+                        // Agregar los textos al span
+                        span.appendChild(text1);
+                        span.appendChild(document.createTextNode(' ')); // Agregar un espacio entre los textos
+                        span.appendChild(text2);
+
+                        // Agregar el span al elemento de lista
+                        li.appendChild(span);
+                    } else {
+                        // Si no se encontró el símbolo dos puntos, agregar el texto como está
+                        li.textContent = instruction;
+                    }
+                    //
                     listaInstrucciones.appendChild(li);
                 });
 
@@ -786,6 +1082,7 @@
         <script src="js/models/recipe.js"></script>
         <script src="js/models/food.js"></script>
         <script src="js/models/group.js"></script>
+        <script src="js/models/user.js"></script>
 
         <script src="js/data/groups.js"></script>
 
