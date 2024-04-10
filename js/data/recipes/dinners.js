@@ -35,7 +35,7 @@ let dinners = [
         { name: "Calabacita cocida", portion: 1/4, unit: "taza" },
         { name: "Aceite de oliva", portion: 1, unit: "cucharadita" },
         { name: "Queso manchego", portion: 200, unit: "ml" },
-        { name: "Jitomate", portion: 100, unit: "g" }
+        { name: "Jitomate", portion: 100, unit: "g" },
         { name: "Sal", portion: 1, unit: "cucharadita" },
         { name: "Pimienta", portion: 1, unit: "cucharadita" },
     ]),
