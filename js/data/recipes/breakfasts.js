@@ -16,6 +16,30 @@ let breakfasts = [
          { name: "Avena en hojuelas", portion: 1/2, unit: "taza" },
          { name: "Leche entera", portion: 1/2, unit: "taza" },
          { name: "Manzana (chica)", portion: 1/2, unit: "unit" }
-     ])
+     ]),
+     new Recipe("Jugo verde(Kiwi y platano)", "Desayuno", "Licuar todo", [
+        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Plátano tabasco", portion: 1, unit: "pieza" },
+        { name: "Kiwi", portion: 200, unit: "pieza" },
+        /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
+    ]),
+    new Recipe("Jugo verde(Mango y platano)", "Desayuno", "Licuar todo", [
+        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Plátano tabasco", portion: 1, unit: "pieza" },
+        { name: "Mango ataulfo", portion: 1/2, unit: "pieza" },
+        /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
+    ]),
+    new Recipe("Jugo verde(Fresa y blueberry)", "Desayuno", "Licuar todo", [
+        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Fresa rebanada", portion: 1, unit: "taza" },
+        /*{ name: "Blueberry", portion: 200, unit: "pieza" },*/
+        /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
+    ]),
+    new Recipe("Huevo y fruta", "Desayuno", "Freir el huevo y servir la fruta", [
+        { name: "Huevo", portion: 1, unit: "pieza" },
+        { name: "Papaya picada", portion: 1, unit: "taza" },
+        /*{ name: "Blueberry", portion: 200, unit: "pieza" },*/
+        /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
+    ]),
      
  ];
