@@ -268,17 +268,17 @@
 /* 
                 /* Estilos para el radio azul cuando está seleccionado */
                 #radio-container input.blue:checked + label {
-                    background-color: blue;
+                    background-color: #09D6DB;
                 }
 
                 /* Estilos para el radio verde cuando está seleccionado */
                 #radio-container input.green:checked + label {
-                    background-color: green;
+                    background-color: #48BF3B;
                 }
 
                 /* Estilos para el radio rojo cuando está seleccionado */
                 #radio-container input.red:checked + label {
-                    background-color: red;
+                    background-color: #FF3B3B;
                 }
 
                 .button-container {
@@ -535,6 +535,10 @@
                     //camposCambiados = true;
                     document.getElementById('caloriasRequeridas').click();//submit
                     //cleanResult()
+                    document.getElementById('saveBtn').disabled = false;
+                    //document.getElementById('copyBtn').disabled = false;
+                    document.getElementById('saveBtn').style.background = '#4caf50';
+                    //document.getElementById('copyBtn').style.background = '#4caf50';
                 });
             });
 
@@ -693,6 +697,10 @@
                 // Mostrar los botones cuando se selecciona el segundo o tercer radio button
                 document.getElementById('saveBtn').style.visibility = 'visible';
                 document.getElementById('copyBtn').style.visibility = 'visible';
+                document.getElementById('saveBtn').disabled = true;
+                document.getElementById('copyBtn').disabled = true;
+                document.getElementById('saveBtn').style.background = 'lightgray';
+                document.getElementById('copyBtn').style.background = 'lightgray';
 
                 document.getElementById('acList').style.display = 'block';
                 document.getElementById('acAlgorithmList').style.display = 'block';
@@ -737,17 +745,19 @@
                 let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
 
                 // Recopilar información de la tabla
-                var tableData = {};
-                var table = document.getElementById('planificacion');
-                var rows = table.getElementsByTagName('tr');
-                for (var j = 1; j < rows[0].cells.length; j++) {
-                    var day = daysOfWeek[j-1]; // Obtener el nombre del día usando el índice
+                let tableData = {};
+                let table = document.getElementById('planificacion');
+                let rows = table.getElementsByTagName('tr');
+                for (let j = 1; j < rows[0].cells.length; j++) {
+                    let day = daysOfWeek[j-1]; // Obtener el nombre del día usando el índice
                     tableData[day.toLowerCase()] = {};
-                    for (var i = 1; i < rows.length - 1; i++) {
-                        var row = rows[i];
-                        var cells = row.getElementsByTagName('td');
-                        var meal = meals[i-1]; // Obtener el nombre de la comida usando el índice
-                        tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].innerText;
+                    //-2 because the last two are total and algorithm
+                    for (let i = 1; i < rows.length - 2; i++) {
+                        let row = rows[i];
+                        let cells = row.getElementsByTagName('td');
+                        let meal = meals[i-1]; // Obtener el nombre de la comida usando el índice
+                        //alert(meal)
+                        tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].id//cells[j].innerText;
                     }
                 }
 
@@ -759,8 +769,10 @@
                     profile: formData
                 };
 
+                console.log(jsonData)
+
                 // Enviar la solicitud HTTP POST
-                fetch(`http://127.0.0.1:5000/${currentUser}`, {
+                fetch(`https://jsonfileapi.onrender.com/${currentUser}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -781,12 +793,23 @@
                     console.error('Error saving data:', error);
                 });
 
+
+                document.getElementById('saveBtn').disabled = true;
+                document.getElementById('copyBtn').disabled = false;
+                document.getElementById('saveBtn').style.background = 'lightgray';
+                document.getElementById('copyBtn').style.background = '#4caf50';
+
                 alert("Guardado!")
             }
 
             function copy() {
                 // Lógica para el botón "Copiar"
                 console.log('Copiando...');
+
+                //document.getElementById('saveBtn').disabled = true;
+                document.getElementById('copyBtn').disabled = true;
+                //document.getElementById('saveBtn').style.background = 'lightgray';
+                document.getElementById('copyBtn').style.background = 'lightgray';
             }
 
             function makeRequest(url) {
@@ -797,6 +820,10 @@
                         var response = JSON.parse(xhr.responseText);
                         fillForm(response.profile);
                         fillTable(response.menu);
+                        //totalss
+                        document.getElementById('caloriasRequeridas').click();//submit
+                        generateInstructionsAndIngredients();//!!!!!!
+                        //updateTotals();
                     }
                 };
                 xhr.send();
@@ -859,12 +886,71 @@
 
                 for (var i = 0; i < meals.length; i++) {
                     var meal = meals[i];
-                    var row = table.rows[i];
+                    //var row = table.rows[i];
+                    var row = table.rows[i];//+1 // Start from the second row (index 1) to skip the header row
+
                     var cells = row.cells;
                     //cells[0].textContent = meal.charAt(0).toUpperCase() + meal.slice(1); // Capitalize the meal name
                     for (var j = 0; j < daysOfWeek.length; j++) {
                         var day = daysOfWeek[j];
-                        cells[j + 1].textContent = menu[day][meal];
+                        //cells[j + 1].textContent = menu[day][meal];
+                        //
+                        
+
+                        let cell = cells[j + 1];// // Start from the second cell (index 1) to skip the meal name cell
+                        let recipeName = menu[day][meal];
+
+                        cell.textContent = recipeName;
+
+                        
+                        //alert(`${day}  ${meal} ${recipeName}`)
+                        if (recipeName) {
+                            let recipe = recipes.find(recipe => recipe.name === recipeName);
+                            if (recipe) {
+                                // Mostrar el nombre de la receta en la celda
+                                cell.innerHTML = `<strong>${recipe.name}</strong><br><br>`;
+
+                                // Crear una lista no ordenada para los ingredientes
+                                const ingredientsList = document.createElement('ul');
+                                ingredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                                ingredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                                // Agregar cada ingrediente a la lista original
+                                recipe.ingredients.forEach(ingredient => {
+                                    const listItem = document.createElement('li');
+                                    listItem.style.marginBottom = '0px'; 
+                                    listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                                    ingredientsList.appendChild(listItem);
+                                });
+
+                                // Agregar la lista original de ingredientes debajo del nombre de la receta
+                                cell.appendChild(ingredientsList);
+
+                                // Agregar un salto de línea entre las dos listas
+                                cell.appendChild(document.createElement('br'));
+
+                                // Crear una segunda lista de ingredientes
+                                const secondIngredientsList = document.createElement('ul');
+                                secondIngredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                                secondIngredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                                // Agregar cada ingrediente a la segunda lista
+                                recipe.ingredients.forEach(ingredient => {
+                                    const listItem = document.createElement('li');
+                                    listItem.style.marginBottom = '0px'; 
+                                    listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                                    secondIngredientsList.appendChild(listItem);
+                                });
+
+                                // Agregar la segunda lista de ingredientes debajo de la lista original
+                                cell.appendChild(secondIngredientsList);
+
+                                // Al hacer clic en una receta, mostrarla en la celda correspondiente
+                                cell.id = recipe.name;
+                            }
+                        }
+                        /**/
+
                     }
                 }
             }
@@ -1013,6 +1099,11 @@
 
                         // Al hacer clic en una receta, mostrarla en la celda correspondiente
                         cell.id = recipe.name;
+
+                        document.getElementById('saveBtn').disabled = false;
+                        //document.getElementById('copyBtn').disabled = false;
+                        document.getElementById('saveBtn').style.background = '#4caf50';
+                        //document.getElementById('copyBtn').style.background = '#4caf50';
 
                         //cell.textContent = recipe.name;
                         closeModal();
