@@ -919,7 +919,7 @@
                                 recipe.ingredients.forEach(ingredient => {
                                     const listItem = document.createElement('li');
                                     listItem.style.marginBottom = '0px'; 
-                                    listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                                    listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
                                     ingredientsList.appendChild(listItem);
                                 });
 
@@ -938,7 +938,7 @@
                                 recipe.ingredients.forEach(ingredient => {
                                     const listItem = document.createElement('li');
                                     listItem.style.marginBottom = '0px'; 
-                                    listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                                    listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
                                     secondIngredientsList.appendChild(listItem);
                                 });
 
@@ -1070,7 +1070,7 @@
                         recipe.ingredients.forEach(ingredient => {
                             const listItem = document.createElement('li');
                             listItem.style.marginBottom = '0px'; 
-                            listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                            listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
                             ingredientsList.appendChild(listItem);
                         });
 
@@ -1089,7 +1089,7 @@
                         recipe.ingredients.forEach(ingredient => {
                             const listItem = document.createElement('li');
                             listItem.style.marginBottom = '0px'; 
-                            listItem.textContent = `${ingredient.portion} ${ingredient.unit} de ${ingredient.name}`;
+                            listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
                             secondIngredientsList.appendChild(listItem);
                         });
 
@@ -1213,7 +1213,7 @@
                 //listaCompras.innerHTML = "<h2>Lista de Compras</h2>";
                 for (let ingredient in allIngredients) {
                     let li = document.createElement("li");
-                    li.textContent = `${allIngredients[ingredient].portion} ${allIngredients[ingredient].unit} de ${ingredient}`;
+                    li.textContent = `${allIngredients[ingredient].portion.toFixed(2)} ${allIngredients[ingredient].unit} de ${ingredient}`;
                     listaCompras.appendChild(li);
                 }
             }
