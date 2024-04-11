@@ -539,6 +539,8 @@
                     document.getElementById('copyBtn').disabled = true;
                     document.getElementById('saveBtn').style.background = '#4caf50';
                     document.getElementById('copyBtn').style.background = 'lightgray';
+
+                    generateInstructionsAndIngredients();//!!!!!!
                 });
             });
 
@@ -760,13 +762,15 @@
                         tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].id//cells[j].innerText;
                     }
                 }
-
+                //console.log(user.allIngredients)
+                //alert(user.allIngredients)
 
 
                 // Construir el objeto JSON
                 var jsonData = {
                     menu: tableData,
-                    profile: formData
+                    profile: formData,
+                    shopping: user.allIngredients
                 };
 
                 console.log(jsonData)
@@ -822,6 +826,7 @@
                         fillTable(response.menu);
                         //totalss
                         document.getElementById('caloriasRequeridas').click();//submit
+                        //alert('generate')
                         generateInstructionsAndIngredients();//!!!!!!
                         //updateTotals();
                     }
@@ -838,6 +843,7 @@
                 document.getElementById('objetivo').value = profile.objective;
 
                 calcularCalorias();
+                
             }
 
             function clearAll() {
@@ -1168,6 +1174,10 @@
                         }
                     }
                 }
+
+                //console.log(user.allIngredients)
+                user.allIngredients = allIngredients;
+                //alert(user.allIngredients)
 
                 // Mostrar las instrucciones en la lista de instrucciones
                 let listaInstrucciones = document.getElementById("listaInstrucciones");
