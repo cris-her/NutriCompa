@@ -38,6 +38,11 @@
             }
         </style> --> 
         <style>
+            .table-container {
+                overflow-x: auto; /* Permite el desplazamiento horizontal */
+                max-width: 100%; /* Establece el ancho máximo */
+            }
+
             .invisible-button {
                 visibility: hidden;
             }
@@ -382,6 +387,7 @@
         </form>
         <div id="resultado"></div> 
 
+        <div class="table-container">
         <!-- <h2>Planificación Semanal de Comidas</h2> -->
         <table class="disabled" id="planificacion">
             <thead>
@@ -469,6 +475,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
 
         <!-- Ventana Modal -->
         <div id="modal" class="modal">
@@ -500,14 +507,14 @@
                     <!-- Elementos de la lista de compras 2 -->
                 </ul>
             </div>
-            <div class="shopping-list">
-                <h2>= a + c</h2>
+            <div id="acList" style="display: none;" class="shopping-list">
+                <h2>= ac</h2>
                 <ul id="listaCompras3">
                     <!-- Elementos de la lista de compras 3 -->
                 </ul>
             </div>
-            <div class="shopping-list">
-                <h2>🧮 a + c</h2>
+            <div id="acAlgorithmList" style="display: none;" class="shopping-list">
+                <h2>🧮 ac</h2>
                 <ul id="listaCompras4">
                     <!-- Elementos de la lista de compras 4 -->
                 </ul>
@@ -678,14 +685,19 @@
             function handleRadioChange(usr) {
                 currentUser = usr;
 
-                // let url = "https://jsonfileapi.onrender.com/"+usr;
-                let url = "http://127.0.0.1:5000/"+usr;
+                let url = "https://jsonfileapi.onrender.com/"+usr;
+                //let url = "http://127.0.0.1:5000/"+usr;
 
                 makeRequest(url);
 
                 // Mostrar los botones cuando se selecciona el segundo o tercer radio button
                 document.getElementById('saveBtn').style.visibility = 'visible';
                 document.getElementById('copyBtn').style.visibility = 'visible';
+
+                document.getElementById('acList').style.display = 'block';
+                document.getElementById('acAlgorithmList').style.display = 'block';
+
+                
             }
 
             function save() {
@@ -802,12 +814,12 @@
             }
 
             function clearAll() {
-                document.getElementById('edad').value = "";
-                document.getElementById('altura').value = "";
-                document.getElementById('peso').value = "";
-                document.getElementById('sexo').value = "";
-                document.getElementById('ejercicio').value = "";
-                document.getElementById('objetivo').value = "";
+                document.getElementById('edad').value = "30";
+                document.getElementById('altura').value = "150";
+                document.getElementById('peso').value = "50";
+                document.getElementById('sexo').value = "mujer";
+                document.getElementById('ejercicio').value = "sedentario";
+                document.getElementById('objetivo').value = "mantener";
                 //document.getElementById('resultado').innerText = "Calcular";
                 document.getElementById("caloriasRequeridas").textContent = "Calcular";
 
@@ -817,6 +829,9 @@
                 //document.getElementById('button-container').style.display = 'none';
                 document.getElementById('saveBtn').style.visibility = 'hidden';
                 document.getElementById('copyBtn').style.visibility = 'hidden';
+
+                document.getElementById('acList').style.display = 'none';
+                document.getElementById('acAlgorithmList').style.display = 'none';
 
                 // Limpiar tabla
                 let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -833,6 +848,8 @@
                         cells[j + 1].textContent = "";
                     }
                 }
+
+                document.getElementById('calculoRequerimiento').submit();//submit
             }
 
             function fillTable(menu) {
