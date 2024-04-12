@@ -215,7 +215,7 @@
         </style>
         <style>
             /* Estilos para la ventana modal */
-            .modal {
+            /* .modal {
                 display: none;
                 position: fixed;
                 z-index: 1;
@@ -233,6 +233,112 @@
                 padding: 20px;
                 border: 1px solid #888;
                 width: 80%;
+            } */
+            /* Estilo para la ventana modal */
+            .modal {
+                display: none; /* Ocultar la modal por defecto */
+                position: fixed; /* Posición fija para mantenerla en el centro */
+                z-index: 1; /* Posición en capas para que esté por encima del resto del contenido */
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto; /* Habilitar el desplazamiento si el contenido es demasiado grande */
+                background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+            }
+
+            /* Estilo para el contenido de la modal */
+            .modal-content {
+                background-color: #fefefe; /* Fondo blanco */
+                margin: 25% auto; /* Margen superior e inferior para centrarlo verticalmente */
+                padding: 20px 20px 50px 20px;
+
+                border: 1px solid #888;
+                width: 80%; /* Ancho de la modal */
+                max-width: 600px; /* Ancho máximo */
+            
+                position: relative;/**/
+                /* height: calc(100vh - 40px); Resta 40px del alto de la ventana para un espacio arriba y abajo */
+                /* height: 100vh; El alto es igual al alto de la parte visible de la ventana */
+                /* height: 50%;  */
+                height: calc(50vh - 40px); /* La mitad del alto de la ventana menos un espacio de 40px arriba y abajo */
+                overflow-y: hidden; /* Oculta el desplazamiento vertical en el contenedor principal */
+
+                /* overflow-y: auto; Agrega desplazamiento vertical si el contenido excede el espacio disponible */
+            }
+
+            /* Estilo para el botón de cerrar */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                /*  */
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 5px 5px 5px 10px;/* 10 */
+                cursor: pointer;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Estilo para el botón Limpiar */
+            .clear-button {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                margin-left: 10px;
+                cursor: pointer;
+            }
+
+            .clear-button:hover {
+                background-color: #ff6659;
+            }
+
+            /* Estilo para las opciones */
+            .modal-options {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 15px;
+            }
+
+            /* Estilo para el input y select */
+            #recipe-search,
+            #recipe-category {
+                flex: 1;
+                margin-right: 10px;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            /* Estilo para la lista de recetas */
+            #recipe-list {
+                list-style-type: none;
+                padding: 0;
+                height: calc(100% - 40px); /* El alto de la lista será el 100% menos un espacio de 40px arriba y abajo */
+                overflow-y: auto; /* Agrega desplazamiento vertical solo si el contenido de la lista excede el espacio disponible */
+            }
+
+            /* Estilo para los elementos de la lista de recetas */
+            #recipe-list li {
+                margin-bottom: 10px;
+                cursor: pointer;
+            }
+
+            #recipe-list li:hover {
+                background-color: #f0f0f0;
             }
         </style>
             <style>
@@ -405,53 +511,53 @@
             <tbody>
                 <tr>
                     <td>🥞</td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Desayuno')"></td>
                 </tr>
                 <tr>
                     <td>🥛</td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
                 </tr>
                 <tr>
                     <td>🍜</td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Comida')"></td>
                 </tr>
                 <tr>
                     <td>🍦</td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Colación')"></td>
                 </tr>
                 <tr>
                     <td>🍣</td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
-                    <td contenteditable="true" onclick="showRecipeModal(this)"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
+                    <td contenteditable="true" onclick="showRecipeModal(this, 'Cena')"></td>
                 </tr>
                 <tr>
                     <td>=</td>
@@ -478,14 +584,44 @@
         </div>
 
         <!-- Ventana Modal -->
-        <div id="modal" class="modal">
+        <!-- <div id="modal" class="modal">
             <div class="modal-content">
+
                 <span class="close" onclick="closeModal()">&times;</span>
-                <!-- <p>Contenido de la ventana modal.</p> -->
+
+                <button onclick="clearTableCell(cell)">Limpiar</button>
+                <input type="text" id="recipe-search" placeholder="Buscar receta...">
+                <select id="recipe-category">
+                    <option value="All">Todas las recetas</option>
+                    <option value="Breakfast">Desayuno</option>
+                    <option value="Lunch">Almuerzo</option>
+                    <option value="Dinner">Cena</option>
+                    <option value="Snack">Colación</option>
+                </select>
+                <p>Contenido de la ventana modal.</p>
                 <h2>Selecciona una receta:</h2>
                 <ul id="recipe-list"></ul>
             </div>
+        </div> -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <br>
+                <div class="modal-options">
+                    <input type="text" id="recipe-search" placeholder="Buscar receta...">
+                    <select id="recipe-category">
+                        <option value="All">Todas las recetas</option>
+                        <option value="Desayuno">Desayuno</option>
+                        <option value="Comida">Comida</option>
+                        <option value="Cena">Cena</option>
+                        <option value="Colación">Colación</option>
+                    </select>
+                    <button class="clear-button" onclick="clearTableCell()">Limpiar</button>
+                </div>
+                <ul id="recipe-list"></ul>
+            </div>
         </div>
+        
 
         <h2>Preparación</h2>
         <ul id="listaInstrucciones">
@@ -1022,6 +1158,175 @@
             }
         </script>
         <script>
+            var currentCell;
+            const searchInput = document.getElementById('recipe-search');
+            const categorySelect = document.getElementById('recipe-category');
+            const recipeList = document.getElementById('recipe-list');
+
+            // Agregar event listener para el campo de búsqueda
+            searchInput.addEventListener('input', function() {
+                const searchText = searchInput.value.toLowerCase(); // Convertir el texto a minúsculas
+                const category = categorySelect.value; // Obtener el valor de la categoría seleccionada
+                
+                // Filtrar las recetas según el texto de búsqueda y la categoría seleccionada
+                const filteredRecipes = recipes.filter(recipe => {
+                    const nameMatch = recipe.name.toLowerCase().includes(searchText); // Verificar si el nombre de la receta coincide con el texto de búsqueda
+                    const categoryMatch = category === 'All' || recipe.category === category; // Verificar si la categoría coincide con la categoría seleccionada o si se seleccionó "Todas las recetas"
+                    return nameMatch && categoryMatch; // Devolver true si tanto el nombre como la categoría coinciden
+                });
+
+                // Mostrar las recetas filtradas en la lista
+                displayRecipes(filteredRecipes);
+            });
+
+            // Agregar event listener para el selector de categoría
+            categorySelect.addEventListener('change', function() {
+                const searchText = searchInput.value.toLowerCase(); // Obtener el texto de búsqueda actual
+                const category = categorySelect.value; // Obtener el valor de la categoría seleccionada
+                
+                // Filtrar las recetas según el texto de búsqueda y la categoría seleccionada
+                const filteredRecipes = recipes.filter(recipe => {
+                    const nameMatch = recipe.name.toLowerCase().includes(searchText); // Verificar si el nombre de la receta coincide con el texto de búsqueda
+                    const categoryMatch = category === 'All' || recipe.category === category; // Verificar si la categoría coincide con la categoría seleccionada o si se seleccionó "Todas las recetas"
+                    return nameMatch && categoryMatch; // Devolver true si tanto el nombre como la categoría coinciden
+                });
+
+                // Mostrar las recetas filtradas en la lista
+                displayRecipes(filteredRecipes);
+            });
+
+            // Función para mostrar las recetas en la lista
+            function displayRecipes(recipes) {
+                recipeList.innerHTML = ''; // Limpiar la lista de recetas
+
+                // Agregar cada receta filtrada a la lista
+                recipes.forEach(recipe => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = recipe.name;
+                    listItem.addEventListener('click', function() {
+                        // Lógica para mostrar la receta seleccionada
+                        showRecipeInCell(currentCell, recipe);
+
+                        closeModal();
+                        
+                        generateInstructionsAndIngredients();//!!!!!!
+                        updateTotals();
+                    });
+                    recipeList.appendChild(listItem);
+                });
+            }
+
+
+            function showRecipeModal(cell, rowCategory) {
+                currentCell = cell;
+                const modal = document.getElementById('modal');
+
+                // Limpiar la lista de recetas
+                recipeList.innerHTML = '';
+
+                // Filtrar las recetas por categoría
+                categorySelect.value = rowCategory;
+                const category = categorySelect.value;
+                const filteredRecipes = category === 'All' ? recipes : recipes.filter(recipe => recipe.category === category);
+
+                // Filtrar las recetas por nombre
+                const searchQuery = searchInput.value.toLowerCase().trim();
+                const searchedRecipes = searchQuery ? filteredRecipes.filter(recipe => recipe.name.toLowerCase().includes(searchQuery)) : filteredRecipes;
+
+                // Agregar cada receta a la lista
+                // searchedRecipes.forEach(recipe => {
+                //     const listItem = document.createElement('li');
+                //     listItem.textContent = recipe.name;
+                //     listItem.addEventListener('click', function() {
+                //         // Mostrar la receta seleccionada en la celda
+                //         showRecipeInCell(cell, recipe);
+
+                //         closeModal();
+                        
+                //         generateInstructionsAndIngredients();//!!!!!!
+                //         updateTotals();
+                //     });
+                //     recipeList.appendChild(listItem);
+                // });
+                // Mostrar todas las recetas al cargar la ventana modal
+                displayRecipes(searchedRecipes);
+
+                // Mostrar la ventana modal
+                modal.style.display = 'block';
+            }
+
+            // Función para mostrar la receta seleccionada en la celda
+            function showRecipeInCell(cell, recipe) {
+                // Limpiar la celda
+                cell.innerHTML = '';
+
+                // Mostrar el nombre de la receta en la celda
+                cell.innerHTML = `<strong>${recipe.name}</strong><br><br>`;
+
+                // Crear una lista no ordenada para los ingredientes
+                const ingredientsList = document.createElement('ul');
+                ingredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                ingredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                // Agregar cada ingrediente a la lista original
+                recipe.ingredients.forEach(ingredient => {
+                    const listItem = document.createElement('li');
+                    listItem.style.marginBottom = '0px';
+                    listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
+                    ingredientsList.appendChild(listItem);
+                });
+
+                // Agregar la lista original de ingredientes debajo del nombre de la receta
+                cell.appendChild(ingredientsList);
+
+                // Agregar un salto de línea entre las dos listas
+                cell.appendChild(document.createElement('br'));
+
+                // Crear una segunda lista de ingredientes
+                const secondIngredientsList = document.createElement('ul');
+                secondIngredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                secondIngredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                // Agregar cada ingrediente a la segunda lista
+                recipe.ingredients.forEach(ingredient => {
+                    const listItem = document.createElement('li');
+                    listItem.style.marginBottom = '0px';
+                    listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
+                    secondIngredientsList.appendChild(listItem);
+                });
+
+                // Agregar la segunda lista de ingredientes debajo de la lista original
+                cell.appendChild(secondIngredientsList);
+
+                // Al hacer clic en una receta, mostrarla en la celda correspondiente
+                cell.id = recipe.name;
+
+                // Habilitar el botón de guardar
+                document.getElementById('saveBtn').disabled = false;
+                document.getElementById('saveBtn').style.background = '#FF9CCA';
+
+                // Cerrar la ventana modal
+                //closeModal();
+            }
+
+            // Función para cerrar la ventana modal
+            function closeModal() {
+                var modal = document.getElementById("modal");
+                modal.style.display = "none";
+            }
+
+            // Función para limpiar la celda de la tabla
+            function clearTableCell() {
+                currentCell.innerHTML = '';
+                currentCell.id = null;
+                closeModal();
+                
+                generateInstructionsAndIngredients();//!!!!!!
+                //calcularCalorias();//updatesTotals
+                updateTotals();
+            }
+
+            /*
             // Función para mostrar la ventana modal con la lista de recetas
             function showRecipeModal(cell) {
                 // Obtener el valor de la celda
@@ -1121,13 +1426,13 @@
 
                 // Mostrar la ventana modal
                 modal.style.display = 'block';
-            }
+            }*/
             
             // Función para cerrar la ventana modal
-            function closeModal() {
-                var modal = document.getElementById("modal");
-                modal.style.display = "none";
-            }
+            // function closeModal() {
+            //     var modal = document.getElementById("modal");
+            //     modal.style.display = "none";
+            // }
             
             // Cerrar la ventana modal al hacer clic fuera de ella
             window.onclick = function(event) {
