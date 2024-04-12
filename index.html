@@ -448,7 +448,7 @@
                     background-color: lightgray; /* Color azul */
                     border-radius: 50%; /* Forma de círculo */
                     margin: 0 5px; /* Espacio entre los puntos */
-                    animation: fadeInOut 0.3s infinite; /* Animación de 1 segundo que se repite infinitamente */
+                    animation: fadeInOut 0.7s infinite; /* Animación de 1 segundo que se repite infinitamente */
                 }
 
                 @keyframes fadeInOut {
@@ -890,17 +890,96 @@
 
         <script>
             var currentUser;
+            var allAditionalIngredients;
+            var mergedShoppingLists;
+            var mainUrl;
+            var complementUrl;
+            var complement;
+
+            function sumShoppingLists(list1, list2) {
+                // Crear un objeto para realizar un seguimiento de los elementos y sus porciones
+                let dict = {};
+
+                // Sumar las porciones de la primera lista al objeto
+                for (const item in list1) {
+                    if (list1.hasOwnProperty(item)) {
+                        const key = item; // Utilizar el nombre del elemento como clave única
+                        dict[key] = list1[item].portion; // Agregar la porción al objeto
+                    }
+                }
+
+                // Sumar las porciones de la segunda lista al objeto
+                for (const item in list2) {
+                    if (list2.hasOwnProperty(item)) {
+                        const key = item; // Utilizar el nombre del elemento como clave única
+                        if (dict.hasOwnProperty(key)) {
+                            // Si el elemento ya está en el objeto, sumar la porción
+                            dict[key] += list2[item].portion;
+                        } else {
+                            // Si el elemento no está en el objeto, agregarlo con su porción
+                            dict[key] = list2[item].portion;
+                        }
+                    }
+                }
+
+                // Convertir el objeto de nuevo a una lista de elementos
+                const result = {};
+                for (const key in dict) {
+                    if (dict.hasOwnProperty(key)) {
+                        result[key] = { portion: dict[key], unit: list1[key] ? list1[key].unit : list2[key].unit };
+                    }
+                }
+
+                return result;
+            }
+
+            function mainCallBack(response){
+                console.log('allAditionalIngredients')
+                console.log(response.shopping)
+                console.log(allAditionalIngredients)
+
+                mergedShoppingLists = sumShoppingLists(response.shopping, allAditionalIngredients);
+                console.log('mergedShoppingLists');
+                console.log(mergedShoppingLists)
+
+        
+                fillForm(response.profile);
+                fillTable(response.menu);
+
+                document.getElementById('caloriasRequeridas').click();
+                generateInstructionsAndIngredients();//!!!!!!
+
+                hideSpinner();
+            }
+
+            function complementCallBack(response){
+                complement = response;
+                allAditionalIngredients = complement.shopping;
+
+                console.log('allAditionalIngredients PRE')
+                console.log(response.shopping)
+                console.log(allAditionalIngredients)
+
+                makeRequest(mainUrl, mainCallBack);
+            }
 
             function handleRadioChange(usr) {
 
                 showSpinner();
 
+                cleanTable();
+
+                mergedShoppingLists = null;
                 currentUser = usr;
 
-                let url = "https://jsonfileapi.onrender.com/"+usr;
-                //let url = "http://127.0.0.1:5000/"+usr;
+                let baseUrl = "https://jsonfileapi.onrender.com/";
 
-                makeRequest(url);
+                mainUrl = baseUrl+usr;
+                //let url = "http://127.0.0.1:5000/"+usr;
+                complementUrl = usr === 'a' ? baseUrl+'c' : baseUrl +'a';
+
+                makeRequest(complementUrl, complementCallBack);
+                // makeRequest(url, mainCallBack);
 
                 // Mostrar los botones cuando se selecciona el segundo o tercer radio button
                 document.getElementById('saveBtn').style.visibility = 'visible';
@@ -919,6 +998,8 @@
             function save() {
                 // Lógica para el botón "Guardar"
                 console.log('Guardando...');
+
+                showSpinner();
 
                 // Recopilar información del formulario
                 var formData = {
@@ -998,45 +1079,112 @@
                 .then(data => {
                     console.log('Data saved successfully:', data);
                     // Hacer algo con la respuesta si es necesario
+
+
+                    document.getElementById('copyBtn').disabled = false;
+                    document.getElementById('copyBtn').style.background = '#FF9CCA';
+
+                    //alert("Guardado!")
+
+                    hideSpinner();
                 })
                 .catch(error => {
                     console.error('Error saving data:', error);
                 });
 
-
                 document.getElementById('saveBtn').disabled = true;
-                document.getElementById('copyBtn').disabled = false;
                 document.getElementById('saveBtn').style.background = 'lightgray';
-                document.getElementById('copyBtn').style.background = '#FF9CCA';
 
-                alert("Guardado!")
+
             }
 
             function copy() {
                 // Lógica para el botón "Copiar"
                 console.log('Copiando...');
 
+                showSpinner();
+
+                let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+                let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+                // Recopilar información de la tabla
+                let tableData = {};
+                let table = document.getElementById('planificacion');
+                let rows = table.getElementsByTagName('tr');
+                for (let j = 1; j < rows[0].cells.length; j++) {
+                    let day = daysOfWeek[j-1]; // Obtener el nombre del día usando el índice
+                    tableData[day.toLowerCase()] = {};
+                    //-2 because the last two are total and algorithm
+                    for (let i = 1; i < rows.length - 2; i++) {
+                        let row = rows[i];
+                        let cells = row.getElementsByTagName('td');
+                        let meal = meals[i-1]; // Obtener el nombre de la comida usando el índice
+                        //alert(meal)
+                        tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].id//cells[j].innerText;
+                    }
+                }
+                
+                // Construir el objeto JSON
+                var jsonData = {
+                    menu: tableData,
+                    profile: complement.profile,
+                    shopping: user.allIngredients
+                };
+
+                console.log(jsonData)
+
+                // Enviar la solicitud HTTP POST
+                fetch(complementUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data copied successfully:', data);
+                    // Hacer algo con la respuesta si es necesario
+                    console.log("Copiado!")
+
+                    if(currentUser === 'a' ){
+                        document.getElementById('radio2').click();
+
+                    } else {
+                        document.getElementById('radio3').click();
+                    }
+
+                    hideSpinner();
+                })
+                .catch(error => {
+                    console.error('Error saving data:', error);
+                });
+                
                 //document.getElementById('saveBtn').disabled = true;
                 document.getElementById('copyBtn').disabled = true;
                 //document.getElementById('saveBtn').style.background = 'lightgray';
                 document.getElementById('copyBtn').style.background = 'lightgray';
+
+
+
             }
 
-            function makeRequest(url) {
+            function makeRequest(url, callback) {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
-                        fillForm(response.profile);
-                        fillTable(response.menu);
-                        //totalss
-                        document.getElementById('caloriasRequeridas').click();//submit
-                        //alert('generate')
-                        generateInstructionsAndIngredients();//!!!!!!
-                        //updateTotals();
 
-                        hideSpinner();
+                        // Llama al callback con la respuesta como argumento
+                        callback(response);
+
+                        
                     }
                 };
                 xhr.send();
@@ -1056,6 +1204,8 @@
             }
 
             function clearAll() {
+                allAditionalIngredients = null;
+
                 document.getElementById('edad').value = "30";
                 document.getElementById('altura').value = "150";
                 document.getElementById('peso').value = "50";
@@ -1075,6 +1225,13 @@
                 document.getElementById('acList').style.display = 'none';
                 document.getElementById('acAlgorithmList').style.display = 'none';
 
+                cleanTable();
+
+                document.getElementById('calculoRequerimiento').submit();//submit
+                
+            }
+            
+            function cleanTable(){
                 // Limpiar tabla
                 let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
                 let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
@@ -1088,10 +1245,9 @@
                     for (var j = 0; j < daysOfWeek.length; j++) {
                         var day = daysOfWeek[j];
                         cells[j + 1].textContent = "";
+                        cells[j + 1].id = "";
                     }
                 }
-
-                document.getElementById('calculoRequerimiento').submit();//submit
             }
 
             function fillTable(menu) {
@@ -1560,6 +1716,11 @@
 
                 //console.log(user.allIngredients)
                 user.allIngredients = allIngredients;
+                console.log('allAditionalIngredients?')
+                console.log(allAditionalIngredients)
+                if(allAditionalIngredients){
+                    mergedShoppingLists = sumShoppingLists(allAditionalIngredients, user.allIngredients)
+                }
                 //alert(user.allIngredients)
 
                 // Mostrar las instrucciones en la lista de instrucciones
@@ -1609,6 +1770,22 @@
                     li.textContent = `${allIngredients[ingredient].portion.toFixed(2)} ${allIngredients[ingredient].unit} de ${ingredient}`;
                     listaCompras.appendChild(li);
                 }
+
+                console.log('mergedShoppingLists')
+                console.log(mergedShoppingLists)
+                // Mostrar los ingredientes en la lista de compras
+                
+                let listaCompras3 = document.getElementById("listaCompras3");
+                if(document.getElementById('acList').style.display === 'block'){
+                    listaCompras3.innerHTML = "";
+                    //listaCompras.innerHTML = "<h2>Lista de Compras</h2>";
+                    for (let ingredient in mergedShoppingLists) {
+                        let li = document.createElement("li");
+                        li.textContent = `${mergedShoppingLists[ingredient].portion.toFixed(2)} ${mergedShoppingLists[ingredient].unit} de ${ingredient}`;
+                        listaCompras3.appendChild(li);
+                    }
+                }
+
             }
 
         </script>
