@@ -424,10 +424,65 @@
                     background-color: #45a049; Cambia el color de fondo al pasar el mouse sobre los botones
                 } */
 
+                #spinner {
+                    position: fixed; /* Posición fija para mantenerlo en la misma ubicación */
+                    top: 50%; /* Alinea la parte superior del spinner al 50% del viewport */
+                    left: 50%; /* Alinea la parte izquierda del spinner al 50% del viewport */
+                    transform: translate(-50%, -50%); /* Mueve el spinner hacia arriba y hacia la izquierda en relación con su tamaño */
+                    z-index: 1000; /* Asegura que el spinner esté por encima de otros elementos */
+                    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente blanco */
+                    padding: 20px; /* Espacio interno del spinner */
+                    border-radius: 10px; /* Borde redondeado */
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+                    display: none; /* Oculta el spinner por defecto */
+                }
+
+                #spinner {
+                    text-align: center;
+                }
+
+                .dot {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    background-color: lightgray; /* Color azul */
+                    border-radius: 50%; /* Forma de círculo */
+                    margin: 0 5px; /* Espacio entre los puntos */
+                    animation: fadeInOut 0.3s infinite; /* Animación de 1 segundo que se repite infinitamente */
+                }
+
+                @keyframes fadeInOut {
+                    0%{
+                        opacity: 0; /* Comienza y termina invisible */
+                    }
+                    33% {
+                        opacity: 0.33; /* Se hace visible a la mitad de la animación */
+                        background-color: #09D6DB;
+                    }
+                    66% {
+                        opacity: 0.66; /* Se hace visible a la mitad de la animación */
+                        background-color: #48BF3B;
+                    }
+                    100% {
+                        opacity: 1; /* Se hace visible a la mitad de la animación */
+                        background-color: #FF3B3B;
+                    }
+                }
+
+
+
+
             </style>
     </head>
 
     <body>
+        <!-- <div id="spinner" style="display: none;">⌛ Cargando <span id="dots"></span></div> -->
+        <div id="spinner" style="display: none;">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
         <div id="radio-container">
             <input class="blue" checked type="radio" id="radio1" name="radios" onclick="clearAll()">
             <label for="radio1"></label>
@@ -608,7 +663,7 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <br>
                 <div class="modal-options">
-                    <input type="text" id="recipe-search" placeholder="Buscar receta...">
+                    <input type="text" id="recipe-search" placeholder="Buscar ...">
                     <select id="recipe-category">
                         <option value="All">Todas las recetas</option>
                         <option value="Desayuno">Desayuno</option>
@@ -659,6 +714,18 @@
         
 
         <script>
+            // Función para mostrar el spinner
+            function showSpinner() {
+                const spinner = document.getElementById('spinner');
+                spinner.style.display = 'inline-block';
+            }
+
+            // Función para ocultar el spinner
+            function hideSpinner() {
+                const spinner = document.getElementById('spinner');
+                spinner.style.display = 'none';
+            }
+
             // Variable para almacenar si algún campo ha cambiado
             //let camposCambiados = false;
 
@@ -825,6 +892,9 @@
             var currentUser;
 
             function handleRadioChange(usr) {
+
+                showSpinner();
+
                 currentUser = usr;
 
                 let url = "https://jsonfileapi.onrender.com/"+usr;
@@ -965,12 +1035,15 @@
                         //alert('generate')
                         generateInstructionsAndIngredients();//!!!!!!
                         //updateTotals();
+
+                        hideSpinner();
                     }
                 };
                 xhr.send();
             }
         
             function fillForm(profile) {
+
                 document.getElementById('edad').value = profile.age;
                 document.getElementById('altura').value = profile.height;
                 document.getElementById('peso').value = profile.weight;
@@ -1318,8 +1391,13 @@
             // Función para limpiar la celda de la tabla
             function clearTableCell() {
                 currentCell.innerHTML = '';
-                currentCell.id = null;
+                currentCell.id = '';
                 closeModal();
+
+                document.getElementById('saveBtn').disabled = false;
+                document.getElementById('copyBtn').disabled = true;
+                document.getElementById('saveBtn').style.background = '#FF9CCA';
+                document.getElementById('copyBtn').style.background = 'lightgray';
                 
                 generateInstructionsAndIngredients();//!!!!!!
                 //calcularCalorias();//updatesTotals
