@@ -244,20 +244,122 @@ function updateTotals() {
             </span>
         `;
 
+        let calculatedCalories = (menorNumero+mayorNumero)/2;
+
+        let totalAlgorithmCalories = 0;
+        let totalAlgorithmCarbohydrates = 0;
+        let totalAlgorithmProteins = 0;
+        let totalAlgorithmFats = 0;
+
+        // ALGORITHM
+        if(user.calories){
+            // Calcula el factor de ajuste necesario para que el total de calorías sea igual a 6666
+            let adjustFactor = user.calories / calculatedCalories;
+        
+            // Array para almacenar los ingredientes ajustados
+            let adjustedIngredients = [];
+        
+            // Iterar sobre cada fila (comida)
+            for (let j = 0; j < rows.length - 1; j++) {
+                let recipeName = rows[j].cells[i].id;
+        
+                if (recipeName !== "") {
+                    let recipe = recipes.find(recipe => recipe.name === recipeName);
+                    if (recipe) {
+                        recipe.ingredients.forEach(ingredient => {
+                            let food = foods.find(food => food.name === ingredient.name);
+                            if (food) {
+                                // Multiplica la porción actual por el factor de ajuste
+                                let adjustedPortion = parseFloat(ingredient.portion) * adjustFactor;
+        
+                                // Crea un nuevo objeto de ingrediente con la porción ajustada
+                                let adjustedIngredient = {
+                                    name: ingredient.name,
+                                    portion: adjustedPortion.toString(), // Convierte a string para mantener el formato
+                                };
+        
+                                // Agrega el ingrediente ajustado al array
+                                adjustedIngredients.push(adjustedIngredient);
+                            }
+                        });
+                    }
+                }
+            }
+        
+            // Calcula los totales usando la lista de ingredientes ajustados
+            let adjustedTotals = calculateTotals(adjustedIngredients);
+        
+            // Actualiza los totales con los valores calculados usando la lista de ingredientes ajustados
+            totalAlgorithmCalories = adjustedTotals.totalCalories;
+            totalAlgorithmCarbohydrates = adjustedTotals.totalCarbohydrates;
+            totalAlgorithmProteins = adjustedTotals.totalProteins;
+            totalAlgorithmFats = adjustedTotals.totalFats;
+        }
+        
+
+        
+
         // Actualizar la celda de Total para el día correspondiente con los totales calculados
         let algorithmCell = rows[rows.length - 1].cells[i];
         //totalCell.textContent = `Calorías: ${totalCalories.toFixed(2)}, Carbohidratos: ${totalCarbohydrates.toFixed(2)}g, Proteínas: ${totalProteins.toFixed(2)}g, Grasas: ${totalFats.toFixed(2)}g`;
-        let algorithmMacros = (totalCarbohydrates.toFixed(2) * 4) + (totalProteins.toFixed(2) * 4) + (totalFats.toFixed(2) * 9)
+        let algorithmMacros = (totalAlgorithmCarbohydrates.toFixed(2) * 4) + (totalAlgorithmProteins.toFixed(2) * 4) + (totalAlgorithmFats.toFixed(2) * 9)
         algorithmCell.innerHTML = `
             <span style="font-size: 80%; color: #333;">
-                Calorías: <strong>${totalCalories.toFixed(2)}</strong>,<br> 
-                Carbohidratos: <strong>${totalCarbohydrates.toFixed(2)}g</strong>,<br>
-                Proteínas: <strong>${totalProteins.toFixed(2)}g</strong>,<br> 
-                Grasas: <strong>${totalFats.toFixed(2)}g</strong>
+                Calorías: <strong>${totalAlgorithmCalories.toFixed(2)}</strong>,<br> 
+                Carbohidratos: <strong>${totalAlgorithmCarbohydrates.toFixed(2)}g</strong>,<br>
+                Proteínas: <strong>${totalAlgorithmProteins.toFixed(2)}g</strong>,<br> 
+                Grasas: <strong>${totalAlgorithmFats.toFixed(2)}g</strong>
             </span>                     
         `;
     }
 }
+
+// Función para calcular los totales usando una lista de ingredientes
+function calculateTotals(ingredients) {
+    let totalCalories = 0;
+    let totalCarbohydrates = 0;
+    let totalProteins = 0;
+    let totalFats = 0;
+
+    ingredients.forEach(ingredient => {
+        let food = foods.find(food => food.name === ingredient.name);
+        if (food) {
+            let carbohydratesPercentage = food.carbohydrates;
+            let fatsPercentage = food.fats;
+            let proteinsPercentage = food.proteins;
+
+            let caloriesFromCarbohydrates = (carbohydratesPercentage / 100) * food.energy;
+            let carbohydratesInGrams = caloriesFromCarbohydrates / 4;
+
+            let caloriesFromFats = (fatsPercentage / 100) * food.energy;
+            let fatsInGrams = caloriesFromFats / 9;
+
+            let caloriesFromProteins = (proteinsPercentage / 100) * food.energy;
+            let proteinsInGrams = caloriesFromProteins / 4;
+
+            let adjustFactor = parseFloat(ingredient.portion) / parseFloat(food.portion);
+
+            let adjustedCalories = parseFloat(food.energy) * adjustFactor;
+            let adjustedCarbohydrates = parseFloat(carbohydratesInGrams) * adjustFactor;
+            let adjustedProteins = parseFloat(proteinsInGrams) * adjustFactor;
+            let adjustedFats = parseFloat(fatsInGrams) * adjustFactor;
+
+            totalCalories += adjustedCalories;
+            totalCarbohydrates += adjustedCarbohydrates;
+            totalProteins += adjustedProteins;
+            totalFats += adjustedFats;
+        }
+    });
+
+    return {
+        totalCalories: totalCalories,
+        totalCarbohydrates: totalCarbohydrates,
+        totalProteins: totalProteins,
+        totalFats: totalFats
+    };
+}
+
+
 
 // //
 function sumShoppingLists(list1, list2) {
