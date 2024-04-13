@@ -1,0 +1,461 @@
+/* 
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+form div {
+    display: flex;
+    align-items: center;
+}
+
+form label {
+    margin-right: 5px;
+}
+
+form input,
+form select {
+    margin-right: 10px;
+}
+
+#resultado {
+    text-align: center;
+    margin-top: 20px;
+} */
+
+.table-container {
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    max-width: 100%; /* Establece el ancho máximo */
+}
+
+.invisible-button {
+    visibility: hidden;
+}
+
+.shopping-lists {
+    display: flex;
+}
+
+.shopping-list {
+    flex: 1;
+    margin-right: 20px; /* Espacio entre las listas */
+}
+
+/* Estilo adicional para las listas de compras */
+.shopping-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* CSS to disable the table */
+/* #planificacion.disabled {
+    pointer-events: none;  Disable pointer events 
+    opacity: 0.5; Optionally adjust opacity to visually indicate disabled state 
+} */
+.disabled {
+    pointer-events: none;
+    opacity: 0.6; /* Optional: This will visually indicate that the table is disabled */
+}
+
+#calculoRequerimiento {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#calculoRequerimiento div {
+    /* flex: 0 0 48%; */
+    flex: 0 0 calc(33.333% - 10px); /* Cambiado el ancho para que ocupe un tercio del espacio disponible */
+    /* margin-bottom: 10px; */
+}
+
+#calculoRequerimiento label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#calculoRequerimiento input,
+#calculoRequerimiento select {
+    width: calc(100% - 10px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#calculoRequerimiento button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FF76BF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#resultado {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/*  */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+h1,
+h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* form {
+    margin-bottom: 20px;
+    text-align: center;
+} */
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-row label {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-row input[type="number"] {
+    flex: 2;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #FF9CCA;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #FF9CCA;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+td[contenteditable="false"] {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/*  */
+/* Estilos para la ventana modal */
+/* .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+} */
+/* Estilo para la ventana modal */
+.modal {
+    display: none; /* Ocultar la modal por defecto */
+    position: fixed; /* Posición fija para mantenerla en el centro */
+    z-index: 1; /* Posición en capas para que esté por encima del resto del contenido */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilitar el desplazamiento si el contenido es demasiado grande */
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+}
+
+/* Estilo para el contenido de la modal */
+.modal-content {
+    background-color: #fefefe; /* Fondo blanco */
+    margin: 25% auto; /* Margen superior e inferior para centrarlo verticalmente */
+    padding: 20px 20px 50px 20px;
+
+    border: 1px solid #888;
+    width: 80%; /* Ancho de la modal */
+    max-width: 600px; /* Ancho máximo */
+
+    position: relative;/**/
+    /* height: calc(100vh - 40px); Resta 40px del alto de la ventana para un espacio arriba y abajo */
+    /* height: 100vh; El alto es igual al alto de la parte visible de la ventana */
+    /* height: 50%;  */
+    height: calc(50vh - 40px); /* La mitad del alto de la ventana menos un espacio de 40px arriba y abajo */
+    overflow-y: hidden; /* Oculta el desplazamiento vertical en el contenedor principal */
+
+    /* overflow-y: auto; Agrega desplazamiento vertical si el contenido excede el espacio disponible */
+}
+
+/* Estilo para el botón de cerrar */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    /*  */
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px 5px 5px 10px;/* 10 */
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo para el botón Limpiar */
+.clear-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background-color: #ff6659;
+}
+
+/* Estilo para las opciones */
+.modal-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+/* Estilo para el input y select */
+#recipe-search,
+#recipe-category {
+    flex: 1;
+    margin-right: 10px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* Estilo para la lista de recetas */
+#recipe-list {
+    list-style-type: none;
+    padding: 0;
+    height: calc(100% - 40px); /* El alto de la lista será el 100% menos un espacio de 40px arriba y abajo */
+    overflow-y: auto; /* Agrega desplazamiento vertical solo si el contenido de la lista excede el espacio disponible */
+}
+
+/* Estilo para los elementos de la lista de recetas */
+#recipe-list li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#recipe-list li:hover {
+    background-color: #f0f0f0;
+}
+
+/*  */
+/* Estilos para el contenedor de los radio buttons */
+#radio-container {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+}
+
+/* Estilos para los radio buttons */
+#radio-container input[type="radio"] {
+    display: none;
+}
+
+
+
+#radio-container label {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+/* Estilos para cuando un radio button está seleccionado */
+/* #radio-container input[type="radio"]:checked + label {
+    background-color: #FF9CCA;
+} */
+/* 
+/* Estilos para el radio azul cuando está seleccionado */
+#radio-container input.blue:checked + label {
+    background-color: #09D6DB;
+}
+
+/* Estilos para el radio verde cuando está seleccionado */
+#radio-container input.green:checked + label {
+    background-color: #48BF3B;
+}
+
+/* Estilos para el radio rojo cuando está seleccionado */
+#radio-container input.red:checked + label {
+    background-color: #FF3B3B;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+/* Estilos para los botones adicionales */
+/* #button-container {
+    text-align: center;
+    margin-top: 20px;
+
+    display: flex; 
+}
+
+#button-container button {
+    padding: 10px 20px; 
+    margin: 0 10px;
+    cursor: pointer;
+} */
+/* #button-container {
+    display: flex;
+    justify-content: space-between; Distribuye los botones equitativamente en el contenedor 
+    margin-top: 20px; Añade un margen superior para separar los botones del resto del formulario 
+}
+
+#button-container button {
+    flex: 1; Los botones ocuparán todo el espacio disponible horizontalmente 
+    padding: 10px; Añade relleno para hacer los botones más grandes 
+    border: none; Quita el borde de los botones 
+    background-color: #FF9CCA; Color de fondo 
+    color: white; Color del texto 
+    cursor: pointer; Cambia el cursor al pasar sobre los botones 
+    border-radius: 5px; Añade bordes redondeados 
+    transition: background-color 0.3s; Agrega una transición suave para el cambio de color de fondo
+}
+
+#button-container button:hover {
+    background-color: #45a049; Cambia el color de fondo al pasar el mouse sobre los botones
+} */
+
+#spinner {
+    position: fixed; /* Posición fija para mantenerlo en la misma ubicación */
+    top: 50%; /* Alinea la parte superior del spinner al 50% del viewport */
+    left: 50%; /* Alinea la parte izquierda del spinner al 50% del viewport */
+    transform: translate(-50%, -50%); /* Mueve el spinner hacia arriba y hacia la izquierda en relación con su tamaño */
+    z-index: 1000; /* Asegura que el spinner esté por encima de otros elementos */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente blanco */
+    padding: 20px; /* Espacio interno del spinner */
+    border-radius: 10px; /* Borde redondeado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+    display: none; /* Oculta el spinner por defecto */
+}
+
+#spinner {
+    text-align: center;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: lightgray; /* Color azul */
+    border-radius: 50%; /* Forma de círculo */
+    margin: 0 5px; /* Espacio entre los puntos */
+    animation: fadeInOut 0.7s infinite; /* Animación de 1 segundo que se repite infinitamente */
+}
+
+@keyframes fadeInOut {
+    0%{
+        opacity: 0; /* Comienza y termina invisible */
+    }
+    33% {
+        opacity: 0.33; /* Se hace visible a la mitad de la animación */
+        background-color: #09D6DB;
+    }
+    66% {
+        opacity: 0.66; /* Se hace visible a la mitad de la animación */
+        background-color: #48BF3B;
+    }
+    100% {
+        opacity: 1; /* Se hace visible a la mitad de la animación */
+        background-color: #FF3B3B;
+    }
+}
