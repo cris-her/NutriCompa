@@ -15,7 +15,7 @@ let breakfasts = [
      new Recipe("Avena con manzana", "Desayuno", "Juntar la avena y la leche, meter al microondas 1.30 y al salir ponerle la manzana y la canela", [
          { name: "Avena en hojuelas", portion: 1/2, unit: "taza" },
          { name: "Leche entera", portion: 1/2, unit: "taza" },
-         { name: "Manzana (chica)", portion: 1/2, unit: "unit" }
+         { name: "Manzana con piel", portion: 1/2, unit: "piezaA" }
      ]),
      new Recipe("Jugo verde(Kiwi y platano)", "Desayuno", "Licuar todo", [
         { name: "Espinaca cruda", portion: 2, unit: "taza" },

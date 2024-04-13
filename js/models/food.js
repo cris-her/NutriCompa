@@ -1,8 +1,12 @@
 class Food {
-    constructor(name, portion, unit, group) {
+    constructor(name, portion, unit, energy, carbohydrates, proteins, fats, group) {
         this.name = name;
         this.portion = portion;
         this.unit = unit;
-        this.group = group;
+        this.energy = energy; //kcal
+        this.carbohydrates = carbohydrates; //%
+        this.proteins = proteins; //%
+        this.fats = fats; //%
+        this.group = group; 
     }
 }

@@ -132,8 +132,8 @@ function updateTotals() {
                         if (food) {
                             //alert('food')
                             // Buscar el grupo al que pertenece el alimento
-                            let group = groups.find(group => group.name === food.group);
-                            if (group) {
+                            //let group = groups.find(group => group.name === food.group);
+                            //if (group) {
                                 //alert('group')
                                 // Calcular el total de calorías, carbohidratos, proteínas y grasas
                                 
@@ -155,17 +155,36 @@ function updateTotals() {
                                 // totalFats += (adjustFactor * parseFloat(group.fat));
 
                                 // Calcular el factor de ajuste
+                                // Suponiendo que food.energy representa el total de calorías y food.carbohydrates es el porcentaje de calorías de carbohidratos
+                                
+                                let carbohydratesPercentage = food.carbohydrates; // Porcentaje de calorías provenientes de carbohidratos
+                                let fatsPercentage = food.fats; // Porcentaje de calorías provenientes de grasas
+                                let proteinsPercentage = food.proteins; // Porcentaje de calorías provenientes de proteínas
+
+                                let caloriesFromCarbohydrates = (carbohydratesPercentage / 100) * food.energy; // Calorías totales provenientes de carbohidratos
+                                let carbohydratesInGrams = caloriesFromCarbohydrates / 4; // Convertir calorías a gramos de carbohidratos (1g de carbohidratos = 4 kcal)
+
+                                let caloriesFromFats = (fatsPercentage / 100) * food.energy;
+                                let fatsInGrams = caloriesFromFats / 9; // Convertir calorías a gramos de grasas (1g de grasa = 9 kcal)
+
+                                let caloriesFromProteins = (proteinsPercentage / 100) * food.energy;
+                                let proteinsInGrams = caloriesFromProteins / 4; // Convertir calorías a gramos de proteínas (1g de proteína = 4 kcal)
+
+                                console.log("Carbohidratos en gramos:", carbohydratesInGrams);
+                                console.log("Proteínas en gramos:", proteinsInGrams);
+                                console.log("Grasas en gramos:", fatsInGrams);
+
                                 
                                 let adjustFactor = parseFloat(ingredient.portion) / parseFloat(food.portion);
                                 //alert(`${ingredient.name} ${parseFloat(ingredient.portion)} ${parseFloat(food.portion)} ${adjustFactor}`)
                                 // Calcular las calorías ajustadas según el factor de ajuste
-                                let adjustedCalories = parseFloat(group.energy) * adjustFactor;
+                                let adjustedCalories = parseFloat(food.energy) * adjustFactor;
                                 // Calcular los carbohidratos ajustados según el factor de ajuste
-                                let adjustedCarbohydrates = parseFloat(group.carbohydrates) * adjustFactor;
+                                let adjustedCarbohydrates = parseFloat(carbohydratesInGrams) * adjustFactor;
                                 // Calcular las proteínas ajustadas según el factor de ajuste
-                                let adjustedProteins = parseFloat(group.proteins) * adjustFactor;
+                                let adjustedProteins = parseFloat(proteinsInGrams) * adjustFactor;
                                 // Calcular las grasas ajustadas según el factor de ajuste
-                                let adjustedFats = parseFloat(group.fat) * adjustFactor;
+                                let adjustedFats = parseFloat(fatsInGrams) * adjustFactor;
                                 // Sumar las calorías ajustadas a totalCalories
                                 totalCalories += adjustedCalories;
                                 // Sumar los carbohidratos ajustados a totalCarbohydrates
@@ -174,7 +193,7 @@ function updateTotals() {
                                 totalProteins += adjustedProteins;
                                 // Sumar las grasas ajustadas a totalFats
                                 totalFats += adjustedFats;
-                            }
+                            //}
                         }
                     });
                 }
@@ -199,14 +218,29 @@ function updateTotals() {
         } else {
             totalCell.style.backgroundColor = '#09D6DB'; //blue // Si no se cumple ninguna de las condiciones anteriores, establecer el fondo azul
         }
-        
+
+        // Calcular los porcentajes de cada macronutriente
+        let carbPercentage = ((totalCarbohydrates * 4) / macros) * 100;
+        let proteinPercentage = ((totalProteins * 4) / macros) * 100;
+        let fatPercentage = ((totalFats * 9) / macros) * 100;
+
+        carbPercentage = isNaN(carbPercentage) ? 0 : carbPercentage;
+        proteinPercentage = isNaN(proteinPercentage) ? 0 : proteinPercentage;
+        fatPercentage = isNaN(fatPercentage) ? 0 : fatPercentage;
+                
+        // Obtener el mayor número entre las dos variables
+        let mayorNumero = totalCalories >= macros ? totalCalories : macros;
+
+        // Obtener el menor número entre las dos variables
+        let menorNumero = totalCalories <= macros ? totalCalories : macros;
+
+
         totalCell.innerHTML = `
             <span style="font-size: 80%; color: #333;">
-                Calorías (avg): <strong>${totalCalories.toFixed(2)}</strong>,<br> 
-                Macronutrientes (Kcal): <strong>${macros.toFixed(2)}</strong>,<br> 
-                Carbohidratos (avg): <strong>${totalCarbohydrates.toFixed(2)}g</strong>,<br>
-                Proteínas (avg): <strong>${totalProteins.toFixed(2)}g</strong>,<br> 
-                Grasas (avg): <strong>${totalFats.toFixed(2)}g</strong>
+                Calorías: <strong>${menorNumero.toFixed(2)} - ${mayorNumero.toFixed(2)}Kcal</strong>,<br> 
+                Carbohidratos: <strong>${totalCarbohydrates.toFixed(2)}g (${(totalCarbohydrates * 4).toFixed(2)}Kcal - ${carbPercentage.toFixed(2)}%)</strong>,<br>
+                Proteínas: <strong>${totalProteins.toFixed(2)}g (${(totalProteins * 4).toFixed(2)}Kcal - ${proteinPercentage.toFixed(2)}%)</strong>,<br> 
+                Grasas: <strong>${totalFats.toFixed(2)}g (${(totalFats * 9).toFixed(2)}Kcal - ${fatPercentage.toFixed(2)}%)</strong>
             </span>
         `;
 
