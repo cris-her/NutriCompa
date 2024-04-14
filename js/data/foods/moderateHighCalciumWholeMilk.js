@@ -12,11 +12,11 @@ let moderateHighCalciumWholeMilk = [
     new Food(
         "Leche entera",
         "1",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "taza (240ml)",
+        147,
+        29,
+        20,
+        51,
         "Leche entera con contenido moderado y alto de calcio"
     ),
     new Food(

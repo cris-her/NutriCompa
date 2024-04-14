@@ -312,7 +312,7 @@ let fruitsRichInFiberAndLowInSugar = [
     new Food(
         "Manzana con piel",
         "1",
-        "pieza (106 g)",
+        "pieza (106g)",
         61,
         96,
         2,

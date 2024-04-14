@@ -10,13 +10,13 @@ let fatFreeCerealsAndTubers = [
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
-        "Avena en hojuelas",
-        "1/3",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "Avena cruda",
+        "1/2",
+        "taza (20g)",
+        79,
+        67,
+        17,
+        16,
         "Cereales y tubérculos sin grasa"
     ),
     new Food(

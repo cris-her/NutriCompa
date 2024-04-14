@@ -13,9 +13,9 @@ let breakfasts = [
  
      // Añadir más Recipes según sea necesario
      new Recipe("Avena con manzana", "Desayuno", "Juntar la avena y la leche, meter al microondas 1.30 y al salir ponerle la manzana y la canela", [
-         { name: "Avena en hojuelas", portion: 1/2, unit: "taza" },
+         { name: "Avena cruda", portion: 1/2, unit: "taza" },
          { name: "Leche entera", portion: 1/2, unit: "taza" },
-         { name: "Manzana con piel", portion: 1/2, unit: "piezaA" }
+         { name: "Manzana con piel", portion: 1/2, unit: "pieza" }
      ]),
      new Recipe("Jugo verde(Kiwi y platano)", "Desayuno", "Licuar todo", [
         { name: "Espinaca cruda", portion: 2, unit: "taza" },
@@ -43,7 +43,7 @@ let breakfasts = [
     ]),
     new Recipe("Pudding de chia con mango", "Desayuno", "Juntar la avena, la chia. con la leche y vainilla, revolver todo para que no queden grumos, dejar en la noche reposar, licuar un mango y colocarlo con la mezcla anterior", [
         { name: "Chia", portion: 2, unit: "cucharadas" },
-        { name: "Avena en hojuelas", portion: 1/3, unit: "taza" },
+        { name: "Avena cruda", portion: 1/3, unit: "taza" },
         { name: "Mango ataulfo", portion: 1/2, unit: "pieza" },
         { name: "Leche entera", portion: 1/2, unit: "taza" }
     ]),
