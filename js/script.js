@@ -225,13 +225,13 @@ function updateTotals() {
         let userCalories = user.calories;
 
         // Establecer el estilo de la celda dependiendo de los valores de calorías requeridas, calorías totales y macronutrientes
-        if (userCalories < totalCalories.toFixed(2) && userCalories < macros) {
-            totalCell.style.backgroundColor = '#FF3B3B'; //red // Si las calorías requeridas son menores que las calorías totales o los macronutrientes, establecer el fondo rojo
-        } else if (userCalories >= totalCalories.toFixed(2) && userCalories <= macros) {
-            totalCell.style.backgroundColor = '#48BF3B';  //green // Si las calorías requeridas son mayores o iguales a las calorías totales y los macronutrientes, establecer el fondo verde
-        } else {
-            totalCell.style.backgroundColor = '#09D6DB'; //blue // Si no se cumple ninguna de las condiciones anteriores, establecer el fondo azul
-        }
+        // if (userCalories < totalCalories.toFixed(2) && userCalories < macros) {
+        //     totalCell.style.backgroundColor = '#FF3B3B'; //red // Si las calorías requeridas son menores que las calorías totales o los macronutrientes, establecer el fondo rojo
+        // } else if (userCalories >= totalCalories.toFixed(2) && userCalories <= macros) {
+        //     totalCell.style.backgroundColor = '#48BF3B';  //green // Si las calorías requeridas son mayores o iguales a las calorías totales y los macronutrientes, establecer el fondo verde
+        // } else {
+        //     totalCell.style.backgroundColor = '#09D6DB'; //blue // Si no se cumple ninguna de las condiciones anteriores, establecer el fondo azul
+        // }
 
         // Calcular los porcentajes de cada macronutriente
         let carbPercentage = ((totalCarbohydrates * 4) / macros) * 100;
@@ -248,6 +248,13 @@ function updateTotals() {
         // Obtener el menor número entre las dos variables
         let menorNumero = totalCalories <= macros ? totalCalories : macros;
 
+        if (userCalories > menorNumero*1.10) {
+            totalCell.style.backgroundColor = '#09D6DB'; //red // Si las calorías requeridas son menores que las calorías totales o los macronutrientes, establecer el fondo rojo
+        } else if (userCalories >= menorNumero*0.9 && userCalories <= mayorNumero*1.10  ) {
+            totalCell.style.backgroundColor = '#48BF3B';  //green // Si las calorías requeridas son mayores o iguales a las calorías totales y los macronutrientes, establecer el fondo verde
+        } else {
+            totalCell.style.backgroundColor = '#FF3B3B'; //blue // Si no se cumple ninguna de las condiciones anteriores, establecer el fondo azul
+        }
 
         totalCell.innerHTML = `
             <span style="font-size: 80%; color: #333;">
