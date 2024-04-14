@@ -14,6 +14,7 @@ var currentMealIndex;
 var currentDayIndex;
 
 var allAlgoAdjustedIngredients;
+var allAditionalAlgorithmIngredients;
 
 const searchInput = document.getElementById('recipe-search');
 const categorySelect = document.getElementById('recipe-category');
@@ -71,6 +72,8 @@ categorySelect.addEventListener('change', function() {
     // Mostrar las recetas filtradas en la lista
     displayRecipes(filteredRecipes);
 });
+
+//////
 
 // Cerrar la ventana modal al hacer clic fuera de ella
 window.onclick = function(event) {
@@ -352,7 +355,7 @@ function updateTotals() {
         let algorithmFatPercentage = ((totalAlgorithmFats * 9) / algorithmMacros) * 100;
 
         algorithmCarbPercentage = isNaN(algorithmCarbPercentage) ? 0 : algorithmCarbPercentage;
-        totalAlgorithmProteins = isNaN(totalAlgorithmProteins) ? 0 : totalAlgorithmProteins;
+        algorithmProteinPercentage = isNaN(totalAlgorithmProteins) ? 0 : totalAlgorithmProteins;
         algorithmFatPercentage = isNaN(algorithmFatPercentage) ? 0 : algorithmFatPercentage;
                 
 
@@ -473,7 +476,88 @@ function mainCallBack(response){
     document.getElementById('caloriasRequeridas').click();
     generateInstructionsAndIngredients();//!!!!!!
 
-    hideSpinner();
+    
+
+    setTimeout(()=>{
+        console.log('Guardado inicial...');
+
+        // Recopilar información del formulario
+        var formData = {
+            age: document.getElementById('edad').value,
+            exercise: document.getElementById('ejercicio').value,
+            height: document.getElementById('altura').value,
+            objective: document.getElementById('objetivo').value,
+            weight: document.getElementById('peso').value,
+            sex: document.getElementById('sexo').value
+        };
+    
+        let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+        let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+    
+        // Recopilar información de la tabla
+        let tableData = {};
+        let table = document.getElementById('planificacion');
+        let rows = table.getElementsByTagName('tr');
+        for (let j = 1; j < rows[0].cells.length; j++) {
+            let day = daysOfWeek[j-1]; // Obtener el nombre del día usando el índice
+            tableData[day.toLowerCase()] = {};
+            //-2 because the last two are total and algorithm
+            for (let i = 1; i < rows.length - 2; i++) {
+                let row = rows[i];
+                let cells = row.getElementsByTagName('td');
+                let meal = meals[i-1]; // Obtener el nombre de la comida usando el índice
+                //alert(meal)
+                tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].id//cells[j].innerText;
+            }
+        }
+    
+        // Construir el objeto JSON
+        var jsonData = {
+            menu: tableData,
+            profile: formData,
+            shopping: user.allIngredients,
+            algorithm: user.algorithm
+        };
+    
+        console.log(jsonData)
+    
+        //alert('data')
+        // Enviar la solicitud HTTP POST
+        fetch(`https://jsonfileapi.onrender.com/${currentUser}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data saved successfully:', data);
+            // Hacer algo con la respuesta si es necesario
+    
+    
+            //document.getElementById('copyBtn').disabled = false;
+            //document.getElementById('copyBtn').style.background = '#FF9CCA';
+    
+            //alert("Guardado!")
+    
+            hideSpinner();
+        })
+        .catch(error => {
+            console.error('Error saving data:', error);
+        });
+
+        //hideSpinner();
+    }, 1000); // 0 milisegundos para que se ejecute en el siguiente ciclo de eventos
+
+    
+
+    //save();
 }
 
 function complementCallBack(response){
@@ -492,6 +576,8 @@ function complementCallBack(response){
 }
 
 function handleRadioChange(usr) {
+
+    user = undefined;
 
     showSpinner();
 
@@ -576,8 +662,13 @@ function save() {
             tableData[day.toLowerCase()][meal.toLowerCase()] = cells[j].id//cells[j].innerText;
         }
     }
-    //console.log(user.allIngredients)
-    //alert(user.allIngredients)
+
+
+    //console.log('user.algorithm')    
+    //console.log(user.algorithm)
+
+
+    //alert(user.algorithm)
 
 
     // Construir el objeto JSON
@@ -682,7 +773,6 @@ function copy() {
 
         if(currentUser === 'a' ){
             document.getElementById('radio2').click();
-
         } else {
             document.getElementById('radio3').click();
         }
@@ -725,6 +815,7 @@ function fillForm(profile) {
 
 function clearAll() {
     allAditionalIngredients = null;
+    allAditionalAlgorithmIngredients = null;
 
     document.getElementById('edad').value = "30";
     document.getElementById('altura').value = "150";
@@ -1283,7 +1374,6 @@ function showRecipeModal(cell) {
 function generateInstructionsAndIngredients() {
     let allInstructions = []; // Lista de instrucciones única
     let allIngredients = {}; // Objeto para almacenar ingredientes
-
     let allAlgoIngredients = {}; // Objeto para almacenar ingredientes
 
     // Recorrer la tabla de planificación
@@ -1328,6 +1418,9 @@ function generateInstructionsAndIngredients() {
     if(allAditionalIngredients){
         mergedShoppingLists = sumShoppingLists(allAditionalIngredients, user.allIngredients)
     }
+
+
+
     //alert(user.allIngredients)
 
     // Mostrar las instrucciones en la lista de instrucciones
@@ -1396,7 +1489,9 @@ function generateInstructionsAndIngredients() {
 
     //console.log(allAlgoIngredients);
     user.algorithm = allAlgoIngredients;
-
+    if(allAditionalAlgorithmIngredients){
+        mergedAlgorithmShoppingLists = sumShoppingLists(allAditionalAlgorithmIngredients, user.algorithm)
+    }
     //console.log('user.algorithm')
     //console.log(user.algorithm)
     //alert(user.algorithm)
