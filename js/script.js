@@ -2,11 +2,18 @@
 var currentUser;
 var allAditionalIngredients;
 var mergedShoppingLists;
+var mergedAlgorithmShoppingLists;
+
 var mainUrl;
 var complementUrl;
 var complement;
 var user;
+
 var currentCell;
+var currentMealIndex;
+var currentDayIndex;
+
+var allAlgoAdjustedIngredients;
 
 const searchInput = document.getElementById('recipe-search');
 const categorySelect = document.getElementById('recipe-category');
@@ -94,12 +101,16 @@ function cleanResult(){
 }
 
 function updateTotals() {
+    user.algorithmRecipes = {};
+    allAlgoAdjustedIngredients = [];
+
     // Obtener la tabla y las filas de la tabla
     let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
     let rows = table.getElementsByTagName("tr");
 
     // Array para los días de la semana
-    let daysOfWeek = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+    let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
 
     // Iterar sobre cada columna (día)
     for (let i = 1; i < rows[0].cells.length; i++) { // Empezamos desde 1 para omitir la primera celda (nombre de la comida)
@@ -110,7 +121,7 @@ function updateTotals() {
         let totalFats = 0;
 
         // Iterar sobre cada fila (comida)
-        for (let j = 0; j < rows.length - 1; j++) {
+        for (let j = 0; j < rows.length - 2; j++) {
             // Obtener el nombre de la receta del ID de la celda
             let recipeName = rows[j].cells[i].id;
 
@@ -257,11 +268,20 @@ function updateTotals() {
             let adjustFactor = user.calories / calculatedCalories;
         
             // Array para almacenar los ingredientes ajustados
-            let adjustedIngredients = [];
-        
+            let allAdjustedIngredients = [];
+
+            //alert(daysOfWeek[i-1])
+            let currentDayOfWeek = daysOfWeek[i-1];
+            user.algorithmRecipes[currentDayOfWeek] = {} 
             // Iterar sobre cada fila (comida)
-            for (let j = 0; j < rows.length - 1; j++) {
+            for (let j = 0; j < rows.length - 2; j++) {
                 let recipeName = rows[j].cells[i].id;
+
+                let currentMeal = meals[j];
+                user.algorithmRecipes[currentDayOfWeek][currentMeal] = {
+                    name: recipeName,
+                    adjustedIngredients: []
+                };
         
                 if (recipeName !== "") {
                     let recipe = recipes.find(recipe => recipe.name === recipeName);
@@ -275,19 +295,28 @@ function updateTotals() {
                                 // Crea un nuevo objeto de ingrediente con la porción ajustada
                                 let adjustedIngredient = {
                                     name: ingredient.name,
-                                    portion: adjustedPortion.toString(), // Convierte a string para mantener el formato
+                                    unit: ingredient.unit,
+                                    portion: adjustedPortion, //.toString() Convierte a string para mantener el formato
                                 };
         
                                 // Agrega el ingrediente ajustado al array
-                                adjustedIngredients.push(adjustedIngredient);
+                                user.algorithmRecipes[currentDayOfWeek][currentMeal]["adjustedIngredients"].push(adjustedIngredient);
+
+
+                                allAdjustedIngredients.push(adjustedIngredient); // Push adjusted ingredient into the global adjustedIngredients array
                             }
                         });
                     }
                 }
             }
-        
+    
+            //console.log(allAdjustedIngredients)
+
+            allAlgoAdjustedIngredients.push(allAdjustedIngredients);//[ingredient.name] = {unit: ingredient.unit, portion: adjustedPortion}; // Push adjusted ingredient into the global adjustedIngredients array
+
+            //alert('allAdjustedIngredients')
             // Calcula los totales usando la lista de ingredientes ajustados
-            let adjustedTotals = calculateTotals(adjustedIngredients);
+            let adjustedTotals = calculateTotals(allAdjustedIngredients);
         
             // Actualiza los totales con los valores calculados usando la lista de ingredientes ajustados
             totalAlgorithmCalories = adjustedTotals.totalCalories;
@@ -295,21 +324,45 @@ function updateTotals() {
             totalAlgorithmProteins = adjustedTotals.totalProteins;
             totalAlgorithmFats = adjustedTotals.totalFats;
         }
-        
-
-        
 
         // Actualizar la celda de Total para el día correspondiente con los totales calculados
         let algorithmCell = rows[rows.length - 1].cells[i];
         //totalCell.textContent = `Calorías: ${totalCalories.toFixed(2)}, Carbohidratos: ${totalCarbohydrates.toFixed(2)}g, Proteínas: ${totalProteins.toFixed(2)}g, Grasas: ${totalFats.toFixed(2)}g`;
         let algorithmMacros = (totalAlgorithmCarbohydrates.toFixed(2) * 4) + (totalAlgorithmProteins.toFixed(2) * 4) + (totalAlgorithmFats.toFixed(2) * 9)
+        
+        // Obtener el mayor número entre las dos variables
+        let mayorNumeroAlgo = totalAlgorithmCalories >= algorithmMacros ? totalAlgorithmCalories : algorithmMacros;
+
+        // Obtener el menor número entre las dos variables
+        let menorNumeroAlgo = totalAlgorithmCalories <= algorithmMacros ? totalAlgorithmCalories : algorithmMacros;
+
+
+        // Establecer el estilo de la celda dependiendo de los valores de calorías requeridas, calorías totales y macronutrientes
+        if (userCalories > menorNumeroAlgo*1.10) {
+            algorithmCell.style.backgroundColor = '#09D6DB'; //red // Si las calorías requeridas son menores que las calorías totales o los macronutrientes, establecer el fondo rojo
+        } else if (userCalories >= menorNumeroAlgo*0.9 && userCalories <= mayorNumeroAlgo*1.10  ) {
+            algorithmCell.style.backgroundColor = '#48BF3B';  //green // Si las calorías requeridas son mayores o iguales a las calorías totales y los macronutrientes, establecer el fondo verde
+        } else {
+            algorithmCell.style.backgroundColor = '#FF3B3B'; //blue // Si no se cumple ninguna de las condiciones anteriores, establecer el fondo azul
+        }
+
+        // Calcular los porcentajes de cada macronutriente
+        let algorithmCarbPercentage = ((totalAlgorithmCarbohydrates * 4) / algorithmMacros) * 100;
+        let algorithmProteinPercentage = ((totalAlgorithmProteins * 4) / algorithmMacros) * 100;
+        let algorithmFatPercentage = ((totalAlgorithmFats * 9) / algorithmMacros) * 100;
+
+        algorithmCarbPercentage = isNaN(algorithmCarbPercentage) ? 0 : algorithmCarbPercentage;
+        totalAlgorithmProteins = isNaN(totalAlgorithmProteins) ? 0 : totalAlgorithmProteins;
+        algorithmFatPercentage = isNaN(algorithmFatPercentage) ? 0 : algorithmFatPercentage;
+                
+
         algorithmCell.innerHTML = `
             <span style="font-size: 80%; color: #333;">
-                Calorías: <strong>${totalAlgorithmCalories.toFixed(2)}</strong>,<br> 
-                Carbohidratos: <strong>${totalAlgorithmCarbohydrates.toFixed(2)}g</strong>,<br>
-                Proteínas: <strong>${totalAlgorithmProteins.toFixed(2)}g</strong>,<br> 
-                Grasas: <strong>${totalAlgorithmFats.toFixed(2)}g</strong>
-            </span>                     
+                Calorías: <strong>${menorNumeroAlgo.toFixed(2)} - ${mayorNumeroAlgo.toFixed(2)}Kcal</strong>,<br> 
+                Carbohidratos: <strong>${totalAlgorithmCarbohydrates.toFixed(2)}g (${(totalAlgorithmCarbohydrates * 4).toFixed(2)}Kcal - ${algorithmCarbPercentage.toFixed(2)}%)</strong>,<br>
+                Proteínas: <strong>${totalAlgorithmProteins.toFixed(2)}g (${(totalAlgorithmProteins * 4).toFixed(2)}Kcal - ${algorithmProteinPercentage.toFixed(2)}%)</strong>,<br> 
+                Grasas: <strong>${totalAlgorithmFats.toFixed(2)}g (${(totalAlgorithmFats * 9).toFixed(2)}Kcal - ${algorithmFatPercentage.toFixed(2)}%)</strong>
+            </span>
         `;
     }
 }
@@ -405,12 +458,17 @@ function mainCallBack(response){
     console.log(allAditionalIngredients)
 
     mergedShoppingLists = sumShoppingLists(response.shopping, allAditionalIngredients);
+    mergedAlgorithmShoppingLists = sumShoppingLists(response.algorithm, allAditionalAlgorithmIngredients);
+
     console.log('mergedShoppingLists');
     console.log(mergedShoppingLists)
 
 
     fillForm(response.profile);
     fillTable(response.menu);
+    calcularCalorias();
+    fillTable(response.menu);
+
 
     document.getElementById('caloriasRequeridas').click();
     generateInstructionsAndIngredients();//!!!!!!
@@ -421,6 +479,10 @@ function mainCallBack(response){
 function complementCallBack(response){
     complement = response;
     allAditionalIngredients = complement.shopping;
+    //console.log('complement here')
+    //console.log(complement)
+    //alert('test')
+    allAditionalAlgorithmIngredients = complement.algorithm;
 
     console.log('allAditionalIngredients PRE')
     console.log(response.shopping)
@@ -436,6 +498,7 @@ function handleRadioChange(usr) {
     cleanTable();
 
     mergedShoppingLists = null;
+    mergedAlgorithmShoppingLists = null;
     currentUser = usr;
 
     let baseUrl = "https://jsonfileapi.onrender.com/";
@@ -521,11 +584,13 @@ function save() {
     var jsonData = {
         menu: tableData,
         profile: formData,
-        shopping: user.allIngredients
+        shopping: user.allIngredients,
+        algorithm: user.algorithm
     };
 
     console.log(jsonData)
 
+    //alert('data')
     // Enviar la solicitud HTTP POST
     fetch(`https://jsonfileapi.onrender.com/${currentUser}`, {
         method: 'POST',
@@ -590,7 +655,8 @@ function copy() {
     var jsonData = {
         menu: tableData,
         profile: complement.profile,
-        shopping: user.allIngredients
+        shopping: user.allIngredients,
+        algorithm: complement.algorithm
     };
 
     console.log(jsonData)
@@ -756,11 +822,15 @@ function fillTable(menu) {
                     secondIngredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
                     secondIngredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
 
-                    // Agregar cada ingrediente a la segunda lista
-                    recipe.ingredients.forEach(ingredient => {
+                    console.log(user.algorithmRecipes[day][meal])
+                    
+                    user.algorithmRecipes[day][meal]["adjustedIngredients"].forEach(adjustedIngredient => {
+                        //console.log(adjustedIngredient)
+                        //alert(adjustedIngredient)
                         const listItem = document.createElement('li');
-                        listItem.style.marginBottom = '0px'; 
-                        listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
+                        listItem.style.fontStyle = 'italic';
+                        listItem.style.marginBottom = '0px';
+                        listItem.textContent = `${adjustedIngredient.portion.toFixed(2)} ${adjustedIngredient.unit} de ${adjustedIngredient.name}`;
                         secondIngredientsList.appendChild(listItem);
                     });
 
@@ -769,6 +839,8 @@ function fillTable(menu) {
 
                     // Al hacer clic en una receta, mostrarla en la celda correspondiente
                     cell.id = recipe.name;
+                    //
+
                 }
             }
             /**/
@@ -826,8 +898,18 @@ function calcularCalorias() {
     document.getElementById("caloriasRequeridas").textContent = `${totalCalorias.toFixed(2)} Kcal`;
     
     // Example instantiation:
-    user = new User(edad, sexo, peso, altura, ejercicio, objetivo, totalCalorias.toFixed(2));
-
+    if(user !== undefined){
+        user.edad = edad;
+        user.sexo = sexo;
+        user.peso = peso;
+        user.altura = altura;
+        user.ejercicio = ejercicio;
+        user.objetivo = objetivo;
+        user.totalCalorias = totalCalorias.toFixed(2);
+    } else {
+        user = new User(edad, sexo, peso, altura, ejercicio, objetivo, totalCalorias.toFixed(2));
+        //alert('new User')
+    }
     //document.getElementById("planificacion").enable = false;
     document.getElementById('planificacion').classList.remove('disabled');
 
@@ -848,19 +930,108 @@ function displayRecipes(recipes) {
         listItem.textContent = recipe.name;
         listItem.addEventListener('click', function() {
             // Lógica para mostrar la receta seleccionada
-            showRecipeInCell(currentCell, recipe);
+            currentCell.id = recipe.name;
+
 
             closeModal();
             
-            generateInstructionsAndIngredients();//!!!!!!
             updateTotals();
+            generateInstructionsAndIngredients();//!!!!!!
+
+
+            showRecipeInCell(currentCell, recipe);///////
+
+            calcularCalorias();
+
+            updateTable(user.algorithmRecipes);///////TEST
+            
         });
         recipeList.appendChild(listItem);
     });
 }
+//
+function updateTable(menu) {
+    let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
+    let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+    for (var i = 0; i < meals.length; i++) {
+        var meal = meals[i];
+        //var row = table.rows[i];
+        var row = table.rows[i];//+1 // Start from the second row (index 1) to skip the header row
+
+        var cells = row.cells;
+        //cells[0].textContent = meal.charAt(0).toUpperCase() + meal.slice(1); // Capitalize the meal name
+        for (var j = 0; j < daysOfWeek.length; j++) {
+            var day = daysOfWeek[j];
+            //cells[j + 1].textContent = menu[day][meal];
+            //
+
+            let cell = cells[j + 1];// // Start from the second cell (index 1) to skip the meal name cell
+            let recipeName = menu[day][meal].name;
+
+            cell.textContent = recipeName;
+
+            //alert(`${day}  ${meal} ${recipeName}`)
+            if (recipeName) {
+                let recipe = recipes.find(recipe => recipe.name === recipeName);
+                if (recipe) {
+                    // Mostrar el nombre de la receta en la celda
+                    cell.innerHTML = `<strong>${recipe.name}</strong><br><br>`;
+
+                    // Crear una lista no ordenada para los ingredientes
+                    const ingredientsList = document.createElement('ul');
+                    ingredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                    ingredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                    // Agregar cada ingrediente a la lista original
+                    recipe.ingredients.forEach(ingredient => {
+                        const listItem = document.createElement('li');
+                        listItem.style.marginBottom = '0px'; 
+                        listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
+                        ingredientsList.appendChild(listItem);
+                    });
+
+                    // Agregar la lista original de ingredientes debajo del nombre de la receta
+                    cell.appendChild(ingredientsList);
+
+                    // Agregar un salto de línea entre las dos listas
+                    cell.appendChild(document.createElement('br'));
+
+                    // Crear una segunda lista de ingredientes
+                    const secondIngredientsList = document.createElement('ul');
+                    secondIngredientsList.style.fontSize = '50%'; // Establecer el tamaño de fuente al 50% del tamaño del nombre de la receta
+                    secondIngredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
+
+                    console.log(user.algorithmRecipes[day][meal])
+                    
+                    user.algorithmRecipes[day][meal]["adjustedIngredients"].forEach(adjustedIngredient => {
+                        //console.log(adjustedIngredient)
+                        //alert(adjustedIngredient)
+                        const listItem = document.createElement('li');
+                        listItem.style.fontStyle = 'italic';
+                        listItem.style.marginBottom = '0px';
+                        listItem.textContent = `${adjustedIngredient.portion.toFixed(2)} ${adjustedIngredient.unit} de ${adjustedIngredient.name}`;
+                        secondIngredientsList.appendChild(listItem);
+                    });
+
+                    // Agregar la segunda lista de ingredientes debajo de la lista original
+                    cell.appendChild(secondIngredientsList);
+
+                    // Al hacer clic en una receta, mostrarla en la celda correspondiente
+                    cell.id = recipe.name;
+                    //
+
+                }
+            }
+            /**/
+        }
+    }
+}
+//
 
 
-function showRecipeModal(cell, rowCategory) {
+function showRecipeModal(cell, mealIndex, dayIndex) {
     currentCell = cell;
     const modal = document.getElementById('modal');
 
@@ -868,7 +1039,8 @@ function showRecipeModal(cell, rowCategory) {
     recipeList.innerHTML = '';
 
     // Filtrar las recetas por categoría
-    categorySelect.value = rowCategory;
+    let rowCategories = ['Desayuno', 'Colación', 'Comida', 'Colación', 'Cena']
+    categorySelect.value = rowCategories[mealIndex];
     const category = categorySelect.value;
     const filteredRecipes = category === 'All' ? recipes : recipes.filter(recipe => recipe.category === category);
 
@@ -892,6 +1064,10 @@ function showRecipeModal(cell, rowCategory) {
     //     recipeList.appendChild(listItem);
     // });
     // Mostrar todas las recetas al cargar la ventana modal
+    currentMealIndex = mealIndex;
+    currentDayIndex = dayIndex;
+
+
     displayRecipes(searchedRecipes);
 
     // Mostrar la ventana modal
@@ -914,6 +1090,7 @@ function showRecipeInCell(cell, recipe) {
     // Agregar cada ingrediente a la lista original
     recipe.ingredients.forEach(ingredient => {
         const listItem = document.createElement('li');
+        listItem.style.color = '#71797E';
         listItem.style.marginBottom = '0px';
         listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
         ingredientsList.appendChild(listItem);
@@ -931,10 +1108,25 @@ function showRecipeInCell(cell, recipe) {
     secondIngredientsList.style.marginBottom = '5px'; // Establecer el margen inferior para una separación vertical más pequeña
 
     // Agregar cada ingrediente a la segunda lista
-    recipe.ingredients.forEach(ingredient => {
+
+    //recipe.ingredients!!!!!!!
+
+    let daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let meals = ["breakfast", "brunch", "lunch", "snack", "dinner"];
+
+    let meal = meals[currentMealIndex]
+    let day = daysOfWeek[currentDayIndex]
+    //console.log(day)
+    //console.log(meal)
+    //console.log(user.algorithmRecipes)
+
+    user.algorithmRecipes[day][meal]["adjustedIngredients"].forEach(adjustedIngredient => {
+        //console.log(adjustedIngredient)
+        //alert(adjustedIngredient)
         const listItem = document.createElement('li');
+        listItem.style.fontStyle = 'italic';
         listItem.style.marginBottom = '0px';
-        listItem.textContent = `${ingredient.portion.toFixed(2)} ${ingredient.unit} de ${ingredient.name}`;
+        listItem.textContent = `${adjustedIngredient.portion.toFixed(2)} ${adjustedIngredient.unit} de ${adjustedIngredient.name}`;
         secondIngredientsList.appendChild(listItem);
     });
 
@@ -942,7 +1134,7 @@ function showRecipeInCell(cell, recipe) {
     cell.appendChild(secondIngredientsList);
 
     // Al hacer clic en una receta, mostrarla en la celda correspondiente
-    cell.id = recipe.name;
+    //cell.id = recipe.name; ALREADY DONE BEFORE CALLING CURRENT METHOD
 
     // Habilitar el botón de guardar
     document.getElementById('saveBtn').disabled = false;
@@ -969,9 +1161,10 @@ function clearTableCell() {
     document.getElementById('saveBtn').style.background = '#FF9CCA';
     document.getElementById('copyBtn').style.background = 'lightgray';
     
-    generateInstructionsAndIngredients();//!!!!!!
+    
     //calcularCalorias();//updatesTotals
     updateTotals();
+    generateInstructionsAndIngredients();//!!!!!!
 }
 
 /*
@@ -1091,6 +1284,8 @@ function generateInstructionsAndIngredients() {
     let allInstructions = []; // Lista de instrucciones única
     let allIngredients = {}; // Objeto para almacenar ingredientes
 
+    let allAlgoIngredients = {}; // Objeto para almacenar ingredientes
+
     // Recorrer la tabla de planificación
     let table = document.getElementById("planificacion").getElementsByTagName("tbody")[0];
     let rows = table.getElementsByTagName("tr");
@@ -1127,6 +1322,9 @@ function generateInstructionsAndIngredients() {
     user.allIngredients = allIngredients;
     console.log('allAditionalIngredients?')
     console.log(allAditionalIngredients)
+    //alert('user.allIngredientsuser.allIngredients')
+    //console.log(user.allIngredients)
+
     if(allAditionalIngredients){
         mergedShoppingLists = sumShoppingLists(allAditionalIngredients, user.allIngredients)
     }
@@ -1180,10 +1378,42 @@ function generateInstructionsAndIngredients() {
         listaCompras.appendChild(li);
     }
 
+    
+    // Mostrar los ingredientes en la lista de compras
+    console.log(allAlgoAdjustedIngredients);
+    // Flatten the list of lists into a single list
+    let flattenedList = [].concat(...allAlgoAdjustedIngredients);
+    console.log(flattenedList);
+
+    flattenedList.forEach(ingredient => {
+        let key = ingredient.name.toLowerCase(); // Convertir el nombre del ingrediente a minúsculas
+        if (key in allAlgoIngredients) {
+            allAlgoIngredients[key].portion += ingredient.portion;
+        } else {
+            allAlgoIngredients[key] = { portion: ingredient.portion, unit: ingredient.unit };
+        }
+    });
+
+    //console.log(allAlgoIngredients);
+    user.algorithm = allAlgoIngredients;
+
+    //console.log('user.algorithm')
+    //console.log(user.algorithm)
+    //alert(user.algorithm)
+
+    //alert('')
+    let listaCompras2 = document.getElementById("listaCompras2");
+    listaCompras2.innerHTML = "";
+    //listaCompras.innerHTML = "<h2>Lista de Compras</h2>";
+    for (let ingredient in allAlgoIngredients) {
+        let li = document.createElement("li");
+        li.textContent = `${allAlgoIngredients[ingredient].portion.toFixed(2)} ${allAlgoIngredients[ingredient].unit} de ${ingredient}`;
+        listaCompras2.appendChild(li);
+    }
+    
     console.log('mergedShoppingLists')
     console.log(mergedShoppingLists)
-    // Mostrar los ingredientes en la lista de compras
-    
+
     let listaCompras3 = document.getElementById("listaCompras3");
     if(document.getElementById('acList').style.display === 'block'){
         listaCompras3.innerHTML = "";
@@ -1192,6 +1422,21 @@ function generateInstructionsAndIngredients() {
             let li = document.createElement("li");
             li.textContent = `${mergedShoppingLists[ingredient].portion.toFixed(2)} ${mergedShoppingLists[ingredient].unit} de ${ingredient}`;
             listaCompras3.appendChild(li);
+        }
+    }
+
+    //alert('here')
+    console.log('mergedAlgorithmShoppingLists')
+    console.log(mergedAlgorithmShoppingLists)
+
+    let listaCompras4 = document.getElementById("listaCompras4");
+    if(document.getElementById('acAlgorithmList').style.display === 'block'){
+        listaCompras4.innerHTML = "";
+        //listaCompras.innerHTML = "<h2>Lista de Compras</h2>";
+        for (let ingredient in mergedAlgorithmShoppingLists) {
+            let li = document.createElement("li");
+            li.textContent = `${mergedAlgorithmShoppingLists[ingredient].portion.toFixed(2)} ${mergedAlgorithmShoppingLists[ingredient].unit} de ${ingredient}`;
+            listaCompras4.appendChild(li);
         }
     }
 
