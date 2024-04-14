@@ -1,6 +1,6 @@
 let dinners = [
     new Recipe("Ensalada con lentejas", "Cena", "Rallar la zanahoria, cortar en cubos el pepino y revolver todos los ingredientes", [
-        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Espinaca, cruda", portion: 2, unit: "taza" },
         { name: "Alubias, garbanzos, habas, lentejas cocidas", portion: 1/8, unit: "taza" },
         { name: "Zanahoria Picada o rallada", portion: 1/4, unit: "taza" },
         { name: "Aguacate", portion: 1/8, unit: "pieza" },

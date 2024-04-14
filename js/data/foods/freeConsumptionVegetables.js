@@ -160,13 +160,13 @@ let freeConsumptionVegetables = [
         "Verduras de consumo libre"
     ),
     new Food(
-        "Espinaca cruda",
+        "Espinaca, cruda",
         "2",
-        "tazas",
-        61,
-        96,
-        2,
-        3,
+        "tazas (120g)",
+        35,
+        50,
+        39,
+        12,
         "Verduras de consumo libre"
     ),
     new Food(

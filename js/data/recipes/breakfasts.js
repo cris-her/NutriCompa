@@ -18,19 +18,19 @@ let breakfasts = [
          { name: "Manzana con piel", portion: 1/2, unit: "pieza" }
      ]),
      new Recipe("Jugo verde(Kiwi y platano)", "Desayuno", "Licuar todo", [
-        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Espinaca, cruda", portion: 2, unit: "taza" },
         { name: "Plátano tabasco", portion: 1, unit: "pieza" },
         { name: "Kiwi", portion: 2, unit: "pieza" },
         /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
     ]),
     new Recipe("Jugo verde(Mango y platano)", "Desayuno", "Licuar todo", [
-        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Espinaca, cruda", portion: 2, unit: "taza" },
         { name: "Plátano tabasco", portion: 1, unit: "pieza" },
         { name: "Mango ataulfo", portion: 1/2, unit: "pieza" },
         /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
     ]),
     new Recipe("Jugo verde(Fresa y blueberry)", "Desayuno", "Licuar todo", [
-        { name: "Espinaca cruda", portion: 2, unit: "taza" },
+        { name: "Espinaca, cruda", portion: 2, unit: "taza" },
         { name: "Fresa rebanada", portion: 1, unit: "taza" },
         /*{ name: "Blueberry", portion: 200, unit: "pieza" },*/
         /*{ name: "Linaza", portion: 2, unit: "cucharada" }*/
