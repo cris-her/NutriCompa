@@ -50,13 +50,13 @@ let freeConsumptionVegetables = [
         "Verduras de consumo libre"
     ),
     new Food(
-        "Champiñón cocido rebanado",
+        "Champiñón fresco",
         "1",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "taza (90 g)",
+        31,
+        51,
+        37,
+        10,
         "Verduras de consumo libre"
     ),
     new Food(
@@ -140,13 +140,13 @@ let freeConsumptionVegetables = [
         "Verduras de consumo libre"
     ),
     new Food(
-        "Espárragos crudos",
+        "Esparragos cocidos",
         "6",
-        "piezas",
-        61,
-        96,
-        2,
-        3,
+        "piezas (90 g)",
+        25,
+        59,
+        35,
+        7,
         "Verduras de consumo libre"
     ),
     new Food(
@@ -260,13 +260,13 @@ let freeConsumptionVegetables = [
         "Verduras de consumo libre"
     ),
     new Food(
-        "Pepino rebanado",
-        "1 1/2",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "Pepino pelado",
+        "1",
+        "taza (104 g)",
+        19,
+        80,
+        14,
+        5,
         "Verduras de consumo libre"
     ),
     new Food(
@@ -318,5 +318,17 @@ let freeConsumptionVegetables = [
         2,
         3,
         "Verduras de consumo libre"
+    ),
+
+    new Food(
+        "Alga nori",
+        "1",
+        "pieza (2.8 g)",
+        2.8,
+        58,
+        41,
+        1,
+        "Verduras de consumo libre"
     )
+
 ];

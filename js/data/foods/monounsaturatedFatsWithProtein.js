@@ -10,23 +10,23 @@ let monounsaturatedFatsWithProtein = [
         "Grasas monoinsaturadas con proteína"
     ),
     new Food(
-        "Aceituna verde",
-        "6",
-        "piezas",
-        61,
-        96,
-        2,
+        "Aceituna",
+        "5.33",
+        "piezas (32 g)",
+        50,
+        10,
         3,
+        88,
         "Grasas monoinsaturadas con proteína"
     ),
     new Food(
         "Aguacate",
-        "1/3",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "1",
+        "pieza (31 g)",
+        49,
+        19,
+        4,
+        77,
         "Grasas monoinsaturadas con proteína"
     ),
     new Food(
@@ -128,5 +128,39 @@ let monounsaturatedFatsWithProtein = [
         2,
         3,
         "Grasas monoinsaturadas con proteína"
+    ),
+
+
+    new Food(
+        "Linaza",
+        "2",
+        "cucharadas (24 gramos)",
+        128,
+        28,
+        18,
+        42,
+        "Grasas monoinsaturadas con proteína"
+    ),
+    new Food(
+        "Semilla de calabaza",
+        "2",
+        "cucharadas (24 gramos)",
+        107,
+        50,
+        17,
+        17,
+        "Grasas monoinsaturadas con proteína"
+    ),
+    new Food(
+        "Mantequilla de coco",
+        "14",
+        "gramos",
+        101,
+        10,
+        6,
+        86,
+        "Grasas monoinsaturadas con proteína"
     )
+
+
 ];

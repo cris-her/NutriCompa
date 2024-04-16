@@ -233,10 +233,10 @@ let highFatAnimalFoods = [
         "Queso manchego",
         "25",
         "gramos",
-        61,
-        96,
-        2,
-        3,
+        94,
+        1,
+        31,
+        69,
         "Alimentos de origen animal altos en grasa"
     ),
     new Food(
@@ -307,6 +307,17 @@ let highFatAnimalFoods = [
         96,
         2,
         3,
+        "Alimentos de origen animal altos en grasa"
+    ),
+
+    new Food(
+        "Jamon de pavo",
+        "2",
+        "piezas (42 g)",
+        51,
+        1,
+        63,
+        37,
         "Alimentos de origen animal altos en grasa"
     )
 ];

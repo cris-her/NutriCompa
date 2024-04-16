@@ -50,13 +50,13 @@ let vegetables = [
         "Verduras"
     ),
     new Food(
-        "Brocoli crudo",
-        "1",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "Brocoli cocido",
+        "1.53",
+        "taza (92 gramos)",
+        39,
+        68,
+        22,
+        9,
         "Verduras"
     ),
     new Food(
@@ -70,13 +70,13 @@ let vegetables = [
         "Verduras"
     ),
     new Food(
-        "Calabacita cocida",
-        "1/2",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "Calabacita italiana",
+        "110",
+        "gramos",
+        25,
+        65,
+        32,
+        4,
         "Verduras"
     ),
     new Food(
@@ -241,12 +241,12 @@ let vegetables = [
     ),
     new Food(
         "Jitomate bola",
-        "1",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "113",
+        "gramos",
+        24,
+        84,
+        11,
+        9,
         "Verduras"
     ),
     new Food(
@@ -380,13 +380,13 @@ let vegetables = [
         "Verduras"
     ),
     new Food(
-        "Zanahoria Picada o rallada",
+        "Zanahoria",
         "1/2",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "taza (40 g)",
+        18,
+        85,
+        8,
+        5,
         "Verduras"
     )
 ];

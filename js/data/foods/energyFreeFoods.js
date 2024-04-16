@@ -170,13 +170,13 @@ let energyFreeFoods = [
         "Alimentos libres de energía"
     ),
     new Food(
-        "Limón",
-        "1/2",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "Limon",
+        "5",
+        "piezas (150 g)",
+        67,
+        83,
+        10,
+        6,
         "Alimentos libres de energía"
     ),
     new Food(

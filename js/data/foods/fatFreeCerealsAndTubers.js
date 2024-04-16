@@ -30,13 +30,13 @@ let fatFreeCerealsAndTubers = [
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
-        "Arroz blanco o integral cocido",
-        "1/2",
-        "taza",
-        61,
-        96,
+        "Arroz blanco",
+        "1/4",
+        "taza (50 g)",
+        63,
+        91,
+        8,
         2,
-        3,
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
@@ -202,11 +202,11 @@ let fatFreeCerealsAndTubers = [
     new Food(
         "Galleta salada",
         "4",
-        "piezas",
-        61,
-        96,
-        2,
-        3,
+        "piezas (20 g)",
+        87,
+        64,
+        8,
+        27,
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
@@ -360,13 +360,13 @@ let fatFreeCerealsAndTubers = [
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
-        "Papa (hervida o al horno)",
+        "Papa al horno, con piel",
         "1/2",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "taza (70 g)",
+        66,
+        91,
+        8,
+        1,
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
@@ -410,13 +410,13 @@ let fatFreeCerealsAndTubers = [
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
-        "Tortilla de maíz",
+        "Tortilla de maiz",
         "1",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "pieza (30 g)",
+        68,
+        79,
+        10,
+        11,
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
@@ -487,6 +487,28 @@ let fatFreeCerealsAndTubers = [
         96,
         2,
         3,
+        "Cereales y tubérculos sin grasa"
+    ),
+
+    new Food(
+        "Chia",
+        "2",
+        "cucharadas (24 gramos)",
+        116.64,
+        31,
+        42,
+        17,
+        "Cereales y tubérculos sin grasa"
+    ),
+
+    new Food(
+        "Quinoa",
+        "1/3",
+        "taza (70 gramos)",
+        84,
+        71,
+        15,
+        14,
         "Cereales y tubérculos sin grasa"
     )
 ];

@@ -1,11 +1,11 @@
 let legumes = [
     new Food(
-        "Alubias, garbanzos, habas, lentejas cocidas",
+        "Lentejas",
         "1/2",
-        "taza",
-        61,
-        96,
-        2,
+        "taza (90 g)",
+        108,
+        67,
+        30,
         3,
         "Leguminosas"
     ),
@@ -20,13 +20,13 @@ let legumes = [
         "Leguminosas"
     ),
     new Food(
-        "Frijol canario, negro cocido",
-        "1/2",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "Frijoles bayos refritos",
+        "1/3",
+        "taza (75 gr)",
+        93,
+        50,
+        16,
+        33,
         "Leguminosas"
     ),
     new Food(

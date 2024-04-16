@@ -591,12 +591,12 @@ let foodsOfAnimalOriginVeryLowInFat = [
     ),
     new Food(
         "Surimi",
-        "2/3",
-        "barra",
-        61,
-        96,
-        2,
-        3,
+        "40",
+        "gramos",
+        38,
+        29,
+        64,
+        9,
         "Alimentos de origen animal muy bajos en grasa"
     ),
     new Food(

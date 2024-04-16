@@ -1,12 +1,12 @@
 let polyunsaturatedFats = [
     new Food(
-        "Aceite de canola, soya, oliva",
+        "Aceite oliva",
         "1",
-        "cucharadita",
-        61,
-        96,
-        2,
-        3,
+        "cucharadita (5 ml)",
+        45,
+        0,
+        0,
+        100,
         "Grasas poliinsaturadas"
     ),
     new Food(

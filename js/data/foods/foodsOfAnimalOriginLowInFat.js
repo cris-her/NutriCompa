@@ -30,13 +30,13 @@ let foodsOfAnimalOriginLowInFat = [
         "Alimentos de origen animal bajos en grasa"
     ),
     new Food(
-        "Atún en aceite",
-        "30",
-        "gramos / 2 cucharadas",
-        61,
-        96,
-        2,
-        3,
+        "Atun en aceite drenado",
+        "1/3",
+        "lata (30 g)",
+        54,
+        0,
+        59,
+        40,
         "Alimentos de origen animal bajos en grasa"
     ),
     new Food(
@@ -283,20 +283,20 @@ let foodsOfAnimalOriginLowInFat = [
         "Queso panela",
         "40",
         "gramos",
-        61,
-        96,
-        2,
-        3,
+        103,
+        4,
+        33,
+        63,
         "Alimentos de origen animal bajos en grasa"
     ),
     new Food(
-        "Salmón",
+        "Salmon",
         "30",
-        "gramos / 2 cucharadas",
-        61,
-        96,
-        2,
-        3,
+        "gramos",
+        53,
+        0,
+        45,
+        54,
         "Alimentos de origen animal bajos en grasa"
     ),
     new Food(

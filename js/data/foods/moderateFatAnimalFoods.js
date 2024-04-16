@@ -50,13 +50,13 @@ let moderateFatAnimalFoods = [
         "Alimentos de origen animal moderados en grasa"
     ),
     new Food(
-        "Huevo",
+        "Huevo frito",
         "1",
-        "pieza",
-        61,
-        96,
+        "pieza (46 g)",
+        88,
         2,
-        3,
+        28,
+        70,
         "Alimentos de origen animal moderados en grasa"
     ),
     new Food(

@@ -61,12 +61,12 @@ let saturatedAndTransFats = [
     ),
     new Food(
         "Crema",
-        "1",
-        "cucharada",
-        61,
-        96,
-        2,
-        3,
+        "11",
+        "cucharadas (110 gramos)",
+        383,
+        5,
+        7,
+        88,
         "Grasas saturadas y trans"
     ),
     new Food(
