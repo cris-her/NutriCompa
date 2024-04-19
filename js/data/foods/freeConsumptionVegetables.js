@@ -202,11 +202,11 @@ let freeConsumptionVegetables = [
     new Food(
         "Lechuga",
         "3",
-        "tazas",
-        61,
-        96,
-        2,
-        3,
+        "tazas (135 g)",
+        24,
+        63,
+        31,
+        8,
         "Verduras de consumo libre"
     ),
     new Food(
@@ -328,6 +328,17 @@ let freeConsumptionVegetables = [
         58,
         41,
         1,
+        "Verduras de consumo libre"
+    ),
+
+    new Food(
+        "Chile chipotle",
+        "15",
+        "gramos",
+        29.4,
+        63,
+        11.60,
+        25,
         "Verduras de consumo libre"
     )
 

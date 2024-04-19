@@ -281,12 +281,12 @@ let energyFreeFoods = [
     ),
     new Food(
         "Salsa de soya",
-        "1/2",
-        "cucharadita",
-        61,
-        96,
-        2,
-        3,
+        "1",
+        "cucharada",
+        8,
+        54.70,
+        44.84,
+        0.44,
         "Alimentos libres de energía"
     ),
     new Food(

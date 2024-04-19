@@ -152,11 +152,11 @@ let cerealsAndTubersWithFat = [
     new Food(
         "Tostada",
         "1",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "pieza (24 g)",
+        103,
+        57,
+        7,
+        36,
         "Cereales y tubérculos con grasa"
     ),
     new Food(

@@ -510,5 +510,45 @@ let fatFreeCerealsAndTubers = [
         15,
         14,
         "Cereales y tubérculos sin grasa"
+    ),
+    new Food(
+        "Mix de granos",
+        "1/4",
+        "taza (25 gramos)",
+        83,
+        86.6,
+        11.50,
+        1.8,
+        "Cereales y tubérculos sin grasa"
+    ),
+    new Food(
+        "Fideo chino",
+        "75.68",
+        "gramos",
+        83,
+        99.3,
+        0.2,
+        0.3,
+        "Cereales y tubérculos sin grasa"
+    ),
+    new Food(
+        "Harina de trigo",
+        "20",
+        "gramos",
+        71,
+        86,
+        12,
+        3,
+        "Cereales y tubérculos sin grasa"
+    ),
+    new Food(
+        "Tapioca",
+        "1/2",
+        "taza (25 gramos)",
+        86,
+        99,
+        0.67,
+        0.23,
+        "Cereales y tubérculos sin grasa"
     )
 ];

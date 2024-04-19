@@ -20,7 +20,7 @@ let breakfasts = [
      new Recipe("Jugo verde(Kiwi y platano)", "Desayuno", "Licuar todo", [
         { name: "Espinaca, cruda", portion: 2, unit: "taza" },
         { name: "Platano tabasco", portion: 1, unit: "pieza" },
-        { name: "Kiwi", portion: 2, unit: "pieza" },
+        { name: "Kiwi", portion: 1, unit: "pieza" },
         { name: "Linaza", portion: 2, unit: "cucharada" }
     ]),
     new Recipe("Jugo verde(Mango y platano)", "Desayuno", "Licuar todo", [

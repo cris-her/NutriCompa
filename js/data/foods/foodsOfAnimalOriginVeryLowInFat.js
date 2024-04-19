@@ -290,13 +290,13 @@ let foodsOfAnimalOriginVeryLowInFat = [
         "Alimentos de origen animal muy bajos en grasa"
     ),
     new Food(
-        "Fajitas de pollo sin piel",
+        "Pollo, pechuga asada",
         "30",
         "gramos",
-        61,
-        96,
-        2,
-        3,
+        46,
+        0,
+        78,
+        21,
         "Alimentos de origen animal muy bajos en grasa"
     ),
     new Food(
@@ -617,6 +617,16 @@ let foodsOfAnimalOriginVeryLowInFat = [
         96,
         2,
         3,
+        "Alimentos de origen animal muy bajos en grasa"
+    ),
+    new Food(
+        "Queso parmesano",
+        "20",
+        "gramos",
+        53,
+        2,
+        30,
+        68,
         "Alimentos de origen animal muy bajos en grasa"
     )
 ];

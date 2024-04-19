@@ -48,5 +48,18 @@ let legumes = [
         2,
         3,
         "Leguminosas"
+    ),
+
+
+    new Food(
+        "Tofu",
+        "85",
+        "gramos",
+        45,
+        13,
+        87,
+        0,
+        "Leguminosas"
     )
+
 ];

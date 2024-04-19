@@ -248,5 +248,15 @@ let sugarsWithFat = [
         2,
         3,
         "Azúcares con Grasa"
+    ),
+    new Food(
+        "Miel",
+        "2",
+        "cucharaditas (14 g)",
+        46,
+        100,
+        0,
+        0,
+        "Azúcares con Grasa"
     )
 ];

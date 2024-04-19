@@ -90,13 +90,13 @@ let fruitsRichInFiberAndLowInSugar = [
         "Frutas ricas en fibra y bajas en azucares"
     ),
     new Food(
-        "Dátil",
+        "Datil",
         "2",
-        "piezas",
-        61,
+        "piezas (18)",
+        56,
         96,
         2,
-        3,
+        0,
         "Frutas ricas en fibra y bajas en azucares"
     ),
     new Food(
@@ -420,13 +420,13 @@ let fruitsRichInFiberAndLowInSugar = [
         "Frutas ricas en fibra y bajas en azucares"
     ),
     new Food(
-        "Piña picada",
+        "Piña",
         "3/4",
-        "taza",
-        61,
-        96,
+        "taza (114 g)",
+        64,
+        94,
+        4,
         2,
-        3,
         "Frutas ricas en fibra y bajas en azucares"
     ),
     new Food(
