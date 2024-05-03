@@ -160,13 +160,13 @@ let cerealsAndTubersWithFat = [
         "Cereales y tubérculos con grasa"
     ),
     new Food(
-        "Totopos y nachos",
-        "4",
-        "piezas",
-        61,
-        96,
-        2,
-        3,
+        "Totopos",
+        "24",
+        "gramos",
+        125,
+        49,
+        5,
+        46,
         "Cereales y tubérculos con grasa"
     ),
     new Food(

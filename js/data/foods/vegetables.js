@@ -160,13 +160,13 @@ let vegetables = [
         "Verduras"
     ),
     new Food(
-        "Chile de árbol",
-        "4",
-        "piezas",
-        61,
-        96,
-        2,
-        3,
+        "Chile verde",
+        "1",
+        "pieza",
+        4,
+        81.13,
+        16.98,
+        1.88,
         "Verduras"
     ),
     new Food(
@@ -387,6 +387,26 @@ let vegetables = [
         85,
         8,
         5,
+        "Verduras"
+    ),
+    new Food(
+        "Cilantro",
+        "2",
+        "tazas (120 g)",
+        33,
+        53,
+        31,
+        17,
+        "Verduras"
+    ),
+    new Food(
+        "Epazote",
+        "10",
+        "gramos",
+        3.2,
+        6.27,
+        89.74,
+        3.99,
         "Verduras"
     )
 ];

@@ -14,6 +14,17 @@ let snacks = [
         { name: "Leche entera", portion: 1, unit: "taza" },
         { name: "Miel", portion: 1, unit: "cucharaditas" }
     ]),
+    new Recipe("Dumplings", "Colación", "Poner en un bowl grande la harina e ir vertiendo agua poco a poco y revolver hasta que ya no queden grumos y la harina ya no se quede pegada y dejar en un papel flim.Cortar la col en trozos finos, agregar la cebolla, el ajo, el jengibre, la carne molida, el aceite, los 60 ml en total de salsa de soya, se mezcla todos los ingredientes. De la masa se van a sacar trozos de 10 gramos ", [
+        { name: "Carne molida de cerdo", portion: 400, unit: "gramos" },
+        { name: "Cebolla", portion: 200, unit: "ml" },
+        { name: "Harina de trigo", portion: 200, unit: "g" },
+        { name: "Col", portion: 85, unit: "gramos" },
+        { name: "Jengibre", portion: 200, unit: "ml" },
+        { name: "Ajo", portion: 100, unit: "g" },
+        { name: "Salsa de soya", portion: 60, unit: "ml" },
+        { name: "Aceite de oliva", portion: 2, unit: "cucharadas" },
+        { name: "pollo", portion: 100, unit: "g" }
+    ]),
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
         { name: "salsa_", portion: 200, unit: "ml" },

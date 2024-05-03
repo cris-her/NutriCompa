@@ -531,12 +531,12 @@ let fruitsRichInFiberAndLowInSugar = [
     ),
     new Food(
         "Zarzamora",
-        "1",
-        "taza",
-        61,
-        96,
-        2,
-        3,
+        "20",
+        "gramos",
+        8.6,
+        83.63,
+        12.09,
+        4.26,
         "Frutas ricas en fibra y bajas en azucares"
     ),
 

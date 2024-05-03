@@ -310,13 +310,13 @@ let freeConsumptionVegetables = [
         "Verduras de consumo libre"
     ),
     new Food(
-        "Tomate Verde",
+        "Tomate",
         "5",
-        "piezas",
-        61,
-        96,
-        2,
-        3,
+        "piezas (80 g)",
+        22,
+        74,
+        17,
+        7,
         "Verduras de consumo libre"
     ),
 

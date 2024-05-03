@@ -51,6 +51,41 @@ let breakfasts = [
         { name: "Queso Oaxaca", portion: 30, unit: "gramos" },
         { name: "Zanahoria", portion: 1/4, unit: "taza" }
     ]),
+    new Recipe("Crepas de avena (fresa con philadelphia)", "Desayuno", "Licuar la avena hasta que se haga un polvo fino y se vacia en un recipiente. En la licuadora agregar  un 1/8 de agua,la leche, los huevos, la vainilla y la avena y se licua por 10 segundos solo para integrar los ingedientes, dejar en el refrigerador por una hora. Despues para cada crepa es aprox 1/4 o 1/3 de taza de la mezcla y la mezcla hay que revolverla porque la avena tiende irse al fondo. Se calienta el sarten a fugo medio y luego se baja a flama baja, se vierte un poco de aceite y se coloca la mezcla, se deja cocinar 45 segundos a un minuto del primer lado, se le da la vuelta y cocinar por 30 segundos. Rellenar la crepa", [
+        { name: "Avena cruda", portion: 1/2, unit: "taza" },
+        { name: "Huevo entero fresco", portion: 1.5, unit: "pieza" },
+        { name: "Leche entera", portion: 1/2, unit: "taza" },
+        { name: "Aceite de oliva", portion: 1, unit: "cucharadita" },
+        { name: "Queso philadelphia", portion: 2, unit: "cucharada" },
+        { name: "Fresas", portion: 10, unit: "piezas" }
+    ]),
+    new Recipe("Crepas de avena (zarzamora con philadelphia)", "Desayuno", "Licuar la avena hasta que se haga un polvo fino y se vacia en un recipiente. En la licuadora agregar  un 1/8 de agua,la leche, los huevos, la vainilla y la avena y se licua por 10 segundos solo para integrar los ingedientes, dejar en el refrigerador por una hora. Despues para cada crepa es aprox 1/4 o 1/3 de taza de la mezcla y la mezcla hay que revolverla porque la avena tiende irse al fondo. Se calienta el sarten a fugo medio y luego se baja a flama baja, se vierte un poco de aceite y se coloca la mezcla, se deja cocinar 45 segundos a un minuto del primer lado, se le da la vuelta y cocinar por 30 segundos. Rellenar la crepa", [
+        { name: "Avena cruda", portion: 1/2, unit: "taza" },
+        { name: "Huevo entero fresco", portion: 1.5, unit: "pieza" },
+        { name: "Leche entera", portion: 1/2, unit: "taza" },
+        { name: "Aceite de oliva", portion: 1, unit: "cucharadita" },
+        { name: "Queso philadelphia", portion: 2, unit: "cucharada" },
+        { name: "Zarzamora", portion: 20, unit: "gramos" }
+    ]),
+    new Recipe("Crepas de avena (espinaca y champiñones con queso oaxaca)", "Desayuno", "Licuar la avena hasta que se haga un polvo fino y se vacia en un recipiente. En la licuadora agregar  un 1/8 de agua,la leche, los huevos, la vainilla y la avena y se licua por 10 segundos solo para integrar los ingedientes, dejar en el refrigerador por una hora. Despues para cada crepa es aprox 1/4 o 1/3 de taza de la mezcla y la mezcla hay que revolverla porque la avena tiende irse al fondo. Se calienta el sarten a fugo medio y luego se baja a flama baja, se vierte un poco de aceite y se coloca la mezcla, se deja cocinar 45 segundos a un minuto del primer lado, se le da la vuelta y cocinar por 30 segundos. Rellenar la crepa", [
+        { name: "Avena cruda", portion: 1/2, unit: "taza" },
+        { name: "Huevo entero fresco", portion: 1.5, unit: "pieza" },
+        { name: "Leche entera", portion: 1/2, unit: "taza" },
+        { name: "Aceite de oliva", portion: 1, unit: "cucharadita" },
+        { name: "Queso philadelphia", portion: 2, unit: "cucharada" },
+        { name: "Espinaca, cruda", portion: 1, unit: "taza" },
+        { name: "Champiñón fresco", portion: 1/4, unit: "taza" },
+        { name: "Queso oaxaca", portion: 30, unit: "gramos" },
+    ]),
+    new Recipe("Chilaquiles verdes con bistec", "Desayuno", "Hervir agua y agregar los chiles verdes durante 5 minutos, despues agregar los tomates y cuando se empiezan a poner amarillos apagar el fuego y dejar cocinarse en esa agua y una vez cocidos sacarlos del agua y dejar enfriar. Una vez frios agregar los tomates, los chiles, el cilantro, la cebolla, el ajo y agregar 1/4 de taza de agua. Freir el epazote y cuando empieza a oler se agrega la salsa y cocer por 20 minutos, despues agergar 1/2 taza de agua y cocer por otros 10 minutos. agregar los totopos a la salsa, sacarlos y agregar el queso y la crema", [
+        { name: "Tomate", portion: 5, unit: "piezas" },
+        { name: "Totopos", portion: 50, unit: "gramos" },
+        { name: "Chile verde", portion: 1, unit: "pieza" },
+        { name: "Epazote", portion: 1, unit: "gramos" },
+        { name: "Cilantro", portion: 1/4, unit: "tazas" },
+        { name: "Queso panela", portion: 30, unit: "gramos" },
+        { name: "Crema", portion: 4, unit: "cucharadas" }
+    ]),
 
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
