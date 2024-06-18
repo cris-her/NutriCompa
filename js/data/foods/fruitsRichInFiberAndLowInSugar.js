@@ -391,12 +391,12 @@ let fruitsRichInFiberAndLowInSugar = [
     ),
     new Food(
         "Pasas",
-        "10",
-        "piezas",
-        61,
-        96,
-        2,
-        3,
+        "20",
+        "gramos",
+        67,
+        95,
+        4,
+        1,
         "Frutas ricas en fibra y bajas en azucares"
     ),
     new Food(

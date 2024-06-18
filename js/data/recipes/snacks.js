@@ -25,6 +25,12 @@ let snacks = [
         { name: "Aceite de oliva", portion: 2, unit: "cucharadas" },
         { name: "pollo", portion: 100, unit: "g" }
     ]),
+    new Recipe("Arroz con leche", "Colación", "Poner el arroz en la arrocera junto con una raja de canela y colocar la medida de agua (si se hace una taza de arroz de agua se deben de colocar dos tazas de agua) y poner la arrocera a funcionar en la opcion de arroz blanco. Apagar la arrocera y revuelve el arroz para despegar el arroz de la olla, despues colocar la leche (por una taza de arroz son dos tazas de leche y si se quiere mas liquido agregar agua). agregar las pasas y la miel. Se revuelve todo. despues se cierra la arrocera y se debe de poner la opcion coccion lenta alta y dejar 10 minutos, pasados esos 10 minutos se abre la arrocera para revolver, se vuelve a dejar cerrada por 5 minutos y despues se vuelve a revolver. deja 5 minutos mas y apagar.)", [
+        { name: "Arroz blanco", portion: 1/4, unit: "taza" },
+        { name: "Leche entera", portion: 1/2, unit: "taza" },
+        { name: "Pasas", portion: 20, unit: "gramos" },
+        { name: "Miel", portion: 1, unit: "cucharaditas" }
+    ]),
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
         { name: "salsa_", portion: 200, unit: "ml" },

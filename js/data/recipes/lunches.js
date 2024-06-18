@@ -42,6 +42,11 @@ let lunches = [
         { name: "Media crema", portion: 4, unit: "cucharadas" }
     ]),
 
+    new Recipe("Arroz rojo", "Cena", "Prender la arrocera y poner en la funcion Saute the simmer, se le pone un chorrito de aceite y se coloca el arroz a que se dore un poco, solo que cambie leve el color (5 minutos aprox). Poner en la licuadora ajo en polvo, cebolla en polvo, un poco de cilantro y 3 jitomates, con media taza de agua, licuar y el liquido verterlo en la olla y poner agua un poco mas arriba de la linea que dice 2. despues poner a funcionar la arrocera en arroz blanco", [
+        { name: "Arroz blanco", portion: 1/4, unit: "taza" },
+        { name: "Jitomate bola", portion: 100, unit: "gramos" },
+    ]),
+
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
         { name: "salsa_", portion: 200, unit: "ml" },
