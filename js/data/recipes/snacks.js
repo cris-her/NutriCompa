@@ -9,11 +9,6 @@ let snacks = [
         { name: "Mantequilla de coco", portion: 14, unit: "gramos" },
         { name: "Semilla de calabaza", portion: 3, unit: "cucharadas" }
     ]),
-    new Recipe("Tapioca", "Colación", "Dejar reposar en agua caliente durante 24 horas, hervir dos tazas de agua y cocinar en fuego alto 20 minutos, agregar la leche y cocinar durante 15 minutos", [
-        { name: "Tapioca", portion: 1/4, unit: "taza" },
-        { name: "Leche entera", portion: 1, unit: "taza" },
-        { name: "Miel", portion: 1, unit: "cucharaditas" }
-    ]),
     new Recipe("Dumplings", "Colación", "Poner en un bowl grande la harina e ir vertiendo agua poco a poco y revolver hasta que ya no queden grumos y la harina ya no se quede pegada y dejar en un papel flim.Cortar la col en trozos finos, agregar la cebolla, el ajo, el jengibre, la carne molida, el aceite, los 60 ml en total de salsa de soya, se mezcla todos los ingredientes. De la masa se van a sacar trozos de 10 gramos ", [
         { name: "Carne molida de cerdo", portion: 400, unit: "gramos" },
         { name: "Cebolla", portion: 200, unit: "ml" },
@@ -30,6 +25,11 @@ let snacks = [
         { name: "Leche entera", portion: 1/2, unit: "taza" },
         { name: "Pasas", portion: 20, unit: "gramos" },
         { name: "Miel", portion: 1, unit: "cucharaditas" }
+    ]),
+    new Recipe("Tapioca", "Colación", "Reposar la tapioca en agua durante al menos 1 hora, despues vertir en la arrocera y poner agua hasta la raya que dice 2 y apretar en la opcion avena, despues revolver para que no se pegue, si hay bolitas todavia que se ven blancas dejar unos 3 minutos y revisar, repetir el paso hasta que ya no queden puntos blancos, ahi agregar la leche, la vainilla y la miel, revolver bien y appagar.", [
+        { name: "Leche entera", portion: 1, unit: "taza" },
+        { name: "Miel", portion: 2, unit: "cucharaditas" },
+        { name: "Tapioca", portion: 1/4, unit: "taza" }
     ]),
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },

@@ -628,5 +628,15 @@ let foodsOfAnimalOriginVeryLowInFat = [
         30,
         68,
         "Alimentos de origen animal muy bajos en grasa"
+    ),
+    new Food(
+        "Carne molida",
+        "30",
+        "g",
+        74,
+        0,
+        41,
+        59,
+        "Alimentos de origen animal muy bajos en grasa"
     )
 ];

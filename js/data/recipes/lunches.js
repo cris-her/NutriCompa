@@ -46,6 +46,11 @@ let lunches = [
         { name: "Arroz blanco", portion: 1/4, unit: "taza" },
         { name: "Jitomate bola", portion: 100, unit: "gramos" },
     ]),
+    new Recipe("Pollo, sopa, verduras", "Comida", "Cocer las fajitas de pollo, cocer las verduras y seguir las instrucciones de la sopa", [
+        { name: "Pasta", portion: 100, unit: "g" },
+        { name: "Brocoli cocido", portion: 1/2, unit: "taza" },
+        { name: "Pollo, pechuga asada", portion: 125, unit: "gramos" },
+    ]),
 
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },

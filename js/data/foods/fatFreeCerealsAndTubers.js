@@ -380,13 +380,13 @@ let fatFreeCerealsAndTubers = [
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
-        "Pasta hervida (fideo, espagueti, lasaña, etc.)",
-        "1/2",
-        "pieza",
-        61,
-        96,
-        2,
-        3,
+        "Pasta",
+        "60",
+        "g",
+        79,
+        94,
+        0,
+        6,
         "Cereales y tubérculos sin grasa"
     ),
     new Food(
@@ -550,5 +550,6 @@ let fatFreeCerealsAndTubers = [
         0.67,
         0.23,
         "Cereales y tubérculos sin grasa"
-    )
+    ),
+
 ];

@@ -38,6 +38,11 @@ let dinners = [
         { name: "Queso manchego", portion: 25, unit: "gramos" },
         { name: "Jitomate bola", portion: 100, unit: "g" }
     ]),
+    new Recipe("Espaguetti a la boloñesa", "Cena", "Calentar agua hasta que hierva y vertir el espaguetti y dejar por 7 minutos, despues se le quita el agua sobrante. Cocer la carne molida. Despues colocar el espaguetti y la carne juntos y agregar la salsa de tomate (la mitad del bote), se mezcla todo y cocinar aprox 10 minutos en 500", [
+        { name: "Pasta", portion: 50, unit: "g" },
+        { name: "Salsa", portion: 50, unit: "ml" },
+        { name: "Carne molida", portion: 125, unit: "g" }
+    ]),
     /////////////////////////////////////////////////////////////////////
     /*new Recipe("Pastaaa", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
