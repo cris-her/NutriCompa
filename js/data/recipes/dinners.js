@@ -43,6 +43,16 @@ let dinners = [
         { name: "Salsa", portion: 50, unit: "ml" },
         { name: "Carne molida", portion: 125, unit: "g" }
     ]),
+
+    new Recipe("Tacos de atun", "Cena", "Agarrar dos latas de atun del verde y verterlo en el sarten, licuar los jitomates y agregarlos al sarten, por ultimo agregar las aceitunas y cocinar en 500 por 15 minutos, se necesita revolver cada 5 minutos. depues ponerle el relleno a una tortilla de harina y agregarle queso", [
+        { name: "Atun", portion: 2, unit: "lata" },
+        { name: "Jitomate", portion: 1/2, unit: "kilo" },
+        { name: "Queso manchego", portion: 1/4, unit: "kilo" },
+        { name: "Aceitunas", portion: 1/4, unit: "bote" },
+        { name: "Tortilla de harina", portion: 1, unit: "paquete" }
+    ]),
+
+
     /////////////////////////////////////////////////////////////////////
     /*new Recipe("Pastaaa", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },

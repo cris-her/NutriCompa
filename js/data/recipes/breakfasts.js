@@ -77,15 +77,7 @@ let breakfasts = [
         { name: "Champiñón fresco", portion: 1/4, unit: "taza" },
         { name: "Queso oaxaca", portion: 30, unit: "gramos" },
     ]),
-    new Recipe("Chilaquiles verdes con bistec", "Desayuno", "Hervir agua y agregar los chiles verdes durante 5 minutos, despues agregar los tomates y cuando se empiezan a poner amarillos apagar el fuego y dejar cocinarse en esa agua y una vez cocidos sacarlos del agua y dejar enfriar. Una vez frios agregar los tomates, los chiles, el cilantro, la cebolla, el ajo y agregar 1/4 de taza de agua. Freir el epazote y cuando empieza a oler se agrega la salsa y cocer por 20 minutos, despues agergar 1/2 taza de agua y cocer por otros 10 minutos. agregar los totopos a la salsa, sacarlos y agregar el queso y la crema", [
-        { name: "Tomate", portion: 5, unit: "piezas" },
-        { name: "Totopos", portion: 50, unit: "gramos" },
-        { name: "Chile verde", portion: 1, unit: "pieza" },
-        { name: "Epazote", portion: 1, unit: "gramos" },
-        { name: "Cilantro", portion: 1/4, unit: "tazas" },
-        { name: "Queso panela", portion: 30, unit: "gramos" },
-        { name: "Crema", portion: 4, unit: "cucharadas" }
-    ]),
+
 
 /*  new Recipe("Pasta", "Cena", "", [
         { name: "pasta", portion: 300, unit: "g" },
